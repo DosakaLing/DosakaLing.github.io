@@ -122,7 +122,7 @@ Direction.2005 = Direction[!train]
   - `Smarket['2005'] = Smarket[Smarket.Year>2005]`
   - `Direction['2005'] = Smarket[Smarket.Year>2005].Direction`
 
- ### Refit
+### Refit
 
 - See the above
 
