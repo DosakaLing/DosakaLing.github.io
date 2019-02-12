@@ -4,4 +4,3 @@ date: 2019-02-11 19:52:20
 tags:
 ---
 
-![](https://res.cloudinary.com/damjuhdwi/image/upload/v1549899285/blogindex.jpg)
