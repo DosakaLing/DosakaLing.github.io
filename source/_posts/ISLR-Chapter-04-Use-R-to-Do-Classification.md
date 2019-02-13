@@ -145,3 +145,52 @@ table(glm.pred,Direction.2005)
 
 # LDA
 
+## Fit Model
+
+- Use `lad(formula)` to fit a LDA model, which is part of `MASS` package
+
+```R
+lda.fit = lda(Direction~Lag1+Lag2,data=Smarket,subset=train)
+```
+
+- result:
+
+```R
+Call:
+lda(Direction ~ Lag1 + Lag2, data = Smarket, subset = train)
+
+Prior probabilities of groups:
+    Down       Up 
+0.491984 0.508016 
+
+Group means:
+            Lag1        Lag2
+Down  0.04279022  0.03389409
+Up   -0.03954635 -0.03132544
+
+Coefficients of linear discriminants:
+            LD1
+Lag1 -0.6420190
+Lag2 -0.5135293
+```
+
+## Assessment
+
+- `plot(lda.fit)` produces plot of the *linear discriminants*
+- `lda.pred=predict(lda.fit,Smarket.2005)`
+- `names(lda.pred)`
+  - **class** contains LDA's predictions about the movement of the market
+  - **posterior** a matrix whose kth column contains the posterior probability belong to the kth class
+  - **x** contains the linear discriminants
+- `lda.class = lda.pred$class`
+- `table(lda.class,Direction.2005)`
+- `mean(lda.class==Direction.2005)`
+
+## Change the Threshold
+
+- `sum(lda.pred$posterior[,1]>=0.5)`
+- `sum(lda.pred$posterior[,1]>0.9)`
+
+- **\* remember to test whether class is correspond to the larger probability**
+  - `lda.pred$posterior[1:20,1]`
+  - `lda.class[1:20]`
