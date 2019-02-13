@@ -194,3 +194,106 @@ Lag2 -0.5135293
 - **\* remember to test whether class is correspond to the larger probability**
   - `lda.pred$posterior[1:20,1]`
   - `lda.class[1:20]`
+
+# KNN
+
+
+## Data Cleaning
+
+```
+train.X = cbind(Lag1,Lag2)[train,]
+test.X = cbind(Lag1,Lag2)[!train,]
+train.Direction = Direction[train]
+train = Year < 2005
+Direction.2005 = Direction[!train]
+```
+## The `knn()` Method
+
+- A part of `class` package
+- `knn()` require four inputs:
+  - matrix containing the predictors associated with the training data
+  - matrix containing the test dataset
+  - vector containing the class labels for training observations
+  - value for K, the level of flexibility
+
+```R
+library(class)
+set.seed(1) #To get stable result if the nearest neighbour is random selected
+knn.pred = knn(train.X,test.X,train.Direction,k=1)
+table(knn.pred,Direction.2005)
+knn.pred = knn(train.X,test.X,train.Direction,k=3)
+table(knn.pred,Direction.2005)
+```
+
+# Application to Caravan Insurance Data
+
+## Data set
+
+- **Caravan** data set, a part of ISLR library
+- Includes 85 predictors that measure demographic characteristics for 5822 individuals, of which 348 purchase the insurance.
+
+{%asset_img caravan.png%}
+
+- **Important:** The scale of the predictor matter a lot to KNN, so we should **standardize** the dataset before we apply the method. **也就是说，如果某个维度上scale比较大，那么这个点就会相当远**
+
+## Data Cleaning
+
+- Standardization
+
+```R
+standardized.X = scale(Caravan(,-86))
+#Use var(Caravan[,1]) and var(Caravan[,2])
+#and var(standardized.X[,1]) and var(standardized.X[,2])
+#To see the effect of scale function
+```
+
+- Split the dataset
+
+```R
+test = 1:1000
+train.X=standardized.X[-test,]
+test.X = standardized.X[test,]
+train.Y = Purchase[-test]
+test.Y=Purchase[test]
+```
+
+## Model Fitting
+
+```
+set.seed(1)
+knn.pred = knn(train.X,test.X,train.Y,k=1)
+mean(test.Y!=knn.pred)
+mean(test.Y!="No")
+```
+
+## Discussion
+
+- The error rate is 12. However, if we just predict every customer would not purchase, the error rate is 6%.
+
+- But, if the company wants to sell insurance to those who want to but it, it's worth noting that:
+
+  - The rate of TP/P* is 0.117, which means among 77 who were predicted to be true, 9 are right-predicted.
+  - However, the random guess is 6%
+
+  - Change the K to 5 yields:
+
+```R
+knn.pred = knn(train.X,test.X,train.Y,k=5)
+table(knn.pred,test.Y)
+```
+
+- When we apply logistic regression:
+
+```R
+glm.fit = glm(Purchase~.,data = Caravan,family=binomial,subset=-test)
+glm.probs = predict(glm.fit,Caravan[test,],type="response")
+glm.pred=rep("No",1000)
+glm.pred[glm.probs>0.5] = "Yes"
+table(glm.pred,test.Y)
+
+#Use 0.25 as the threshold
+glm.pred=rep("No",1000)
+glm.pred[glm.probs>0.25] = "Yes"
+table(glm.pred,test.Y)
+```
+
