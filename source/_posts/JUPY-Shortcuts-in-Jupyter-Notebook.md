@@ -4,6 +4,7 @@ date: 2019-02-21 18:13:50
 tags:
 	- Python
 categories:
+	- Programing
 	- Python
 	- Memo
 ---
