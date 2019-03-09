@@ -33,6 +33,8 @@ cond2(no)->op6->op7->op8
 cond2(yes)->op5->op8
 op8->e
 ```
+<!--more-->
+
 # The purpose of external audit engagements
 
 ## The Objective of external audit
