@@ -1,5 +1,5 @@
 ---
-title: '[ ITMC ] Chapter 02 - Learning Objectives'
+title: '[ ITMA ] Chapter 02 - Learning Objectives'
 date: 2019-03-07 22:58:45
 tags:
 	- Management Accounting
@@ -123,3 +123,21 @@ Example of Cost Drivers:
 - the level of sales at which revenue equals expenses and net income is zero.
 - {%asset_img cvp.png%}
 
+## Target Net Profit
+
+- Formula: $Target Sales Volume In Units = \frac{Fixed expenses + Target net income}{Contribution margin per unit}$
+- contribution margin ratio =  unit contribution / selling price
+- Sales volume in dollars = fixed expenses+target net income/contribution margin ratio
+
+- An example:
+  - {%asset_img nonprofit.png%}
+
+## Margin of Safety
+
+- How far sales can fall before losses occur and is the difference between the level of planned sales and the break-even point.
+- margin of safety in units = planned unit sales - break-even unit sales
+
+# Operating Leverage
+
+- A firm's ratio of fixed costs to variable costs
+- 
