@@ -3,7 +3,7 @@ title: '[ CIEM ] Chapter 02 - 数据库及其查询'
 date: 2019-02-25 14:15:30
 tags:
 	- Computer
-catogories:
+categories:
 	- Data Analysis
 	- 经管机
 ---
