@@ -8,9 +8,9 @@ categories:
 	- Managerial operations research
 ---
 
-<!--more-->
-
 # LP Formulaiton Guidelines
+
+<!--more-->
 
 ## Guidelines for formulation:
 
