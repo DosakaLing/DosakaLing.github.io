@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="R,Data Mining,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Basic usage and example code of R The second lesson">
+<meta name="keywords" content="R,Data Mining">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ ITDM ] Lesson 2 - R Basic">
+<meta property="og:url" content="http://yoursite.com/Programing/R/Data-Mining/ITDM-Lesson-2-R-Basic/index.html">
+<meta property="og:site_name" content="TusakaRin">
+<meta property="og:description" content="Basic usage and example code of R The second lesson">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-13T11:59:48.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ ITDM ] Lesson 2 - R Basic">
+<meta name="twitter:description" content="Basic usage and example code of R The second lesson">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Programing/R/Data-Mining/ITDM-Lesson-2-R-Basic/">
+
+
+
+
+
+  <title>[ ITDM ] Lesson 2 - R Basic | TusakaRin</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TusakaRin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is fantastic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Programing/R/Data-Mining/ITDM-Lesson-2-R-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary Dai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TusakaRin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ ITDM ] Lesson 2 - R Basic</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-08T08:20:16+08:00">
+                2019-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/" itemprop="url" rel="index">
+                    <span itemprop="name">Programing</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/R/" itemprop="url" rel="index">
+                    <span itemprop="name">R</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/R/Data-Mining/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Mining</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>Basic usage and example code of R</li>
+<li>The second lesson</li>
+</ul>
+<a id="more"></a>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#slide 5</span></span><br><span class="line">a &lt;- c(<span class="number">1</span>, <span class="number">2.5</span>, <span class="number">6</span>, -<span class="number">2</span>)</span><br><span class="line">b &lt;- c(<span class="string">"one"</span>,<span class="string">"two"</span>,<span class="string">"three"</span>)</span><br><span class="line">c &lt;- c(<span class="literal">TRUE</span>,<span class="literal">TRUE</span>,<span class="literal">FALSE</span>,<span class="literal">TRUE</span>,<span class="literal">FALSE</span>)</span><br><span class="line">x &lt;- vector(<span class="string">"numeric"</span>, length = <span class="number">10</span>) <span class="comment">#10 zeros in x</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 6</span></span><br><span class="line">a[<span class="number">1</span>]</span><br><span class="line">a[c(<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>)]</span><br><span class="line">a[-c(<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>)]</span><br><span class="line"><span class="comment"># select elements &gt;0</span></span><br><span class="line">a[c (<span class="literal">TRUE</span>,<span class="literal">TRUE</span>,<span class="literal">TRUE</span>,<span class="literal">FALSE</span>)]</span><br><span class="line">a[a&gt;<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 7</span></span><br><span class="line">seq(<span class="number">1</span>:<span class="number">10</span>)</span><br><span class="line">seq(<span class="number">1</span>, <span class="number">10</span>,by=<span class="number">2</span>)</span><br><span class="line">seq(<span class="number">1</span>, <span class="number">10</span>,length=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 8</span></span><br><span class="line">x&lt;-list(<span class="number">1</span>,<span class="string">"a"</span>,<span class="literal">TRUE</span>, <span class="number">1</span>+<span class="number">4i</span>)</span><br><span class="line">x[[<span class="number">2</span>]]</span><br><span class="line"></span><br><span class="line">w&lt;-list(name=<span class="string">"Fred"</span>,mynumbers=c(<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>), age=<span class="number">5.3</span>)</span><br><span class="line">w[[<span class="string">'age'</span>]]</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 9</span></span><br><span class="line">x&lt;-matrix(<span class="number">1</span>:<span class="number">6</span>, nrow=<span class="number">2</span>, ncol=<span class="number">3</span>, byrow=<span class="literal">FALSE</span>)</span><br><span class="line">x</span><br><span class="line">dim(x)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 10</span></span><br><span class="line">x&lt;-matrix(<span class="number">1</span>:<span class="number">6</span>, nrow=<span class="number">2</span>, ncol=<span class="number">3</span>, byrow=<span class="literal">TRUE</span>)</span><br><span class="line">x[<span class="number">1</span>,]      <span class="comment">#return a vector</span></span><br><span class="line">x[<span class="number">1</span>,,drop=<span class="literal">FALSE</span>] <span class="comment">#keep as 1*3 matrix</span></span><br><span class="line">x[,<span class="number">2</span>]</span><br><span class="line">x[<span class="number">1</span>:<span class="number">2</span>,<span class="number">1</span>:<span class="number">2</span>]</span><br><span class="line">x[x&gt;<span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 11</span></span><br><span class="line">cells&lt;-<span class="number">1</span>:<span class="number">6</span></span><br><span class="line">rnames&lt;-c(<span class="string">"R1"</span>,<span class="string">"R2"</span>)</span><br><span class="line">cnames&lt;-c(<span class="string">"C1"</span>,<span class="string">"C2"</span>,<span class="string">"C3"</span>)</span><br><span class="line">matrix(cells,nrow=<span class="number">2</span>,ncol=<span class="number">3</span>,byrow=<span class="literal">TRUE</span>,dimnames=list(rnames,cnames))</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 13</span></span><br><span class="line">color&lt;-c(<span class="string">'red'</span>,<span class="string">'blue'</span>,<span class="string">'yellow'</span>,<span class="string">'red'</span>)</span><br><span class="line">is.factor(color)</span><br><span class="line">color&lt;-factor(color)</span><br><span class="line">is.factor(color)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 14</span></span><br><span class="line">salary&lt;-c(<span class="string">'low'</span>,<span class="string">'medium'</span>,<span class="string">'high'</span>,<span class="string">'medium'</span>)</span><br><span class="line">factor(salary,ordered=<span class="literal">TRUE</span>, levels=c(<span class="string">"low"</span>,<span class="string">"medium"</span>,<span class="string">"high"</span>))</span><br><span class="line">factor(salary,ordered=<span class="literal">TRUE</span>, levels=c(<span class="string">"low"</span>,<span class="string">"high"</span>))  <span class="comment">#&lt;NA&gt;:Missing values</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 16</span></span><br><span class="line">ID&lt;-c(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line">Color&lt;-c(<span class="string">"black"</span>,<span class="string">"brown"</span>,<span class="string">"black"</span>,<span class="string">"yellow"</span>)</span><br><span class="line">Passed&lt;-c(<span class="literal">TRUE</span>,<span class="literal">TRUE</span>,<span class="literal">TRUE</span>,<span class="literal">FALSE</span>)</span><br><span class="line">x&lt;-data.frame(ID, Color, Passed)</span><br><span class="line">y&lt;-data.frame(ID, Color, Passed, stringsAsFactors = <span class="literal">FALSE</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 17</span></span><br><span class="line">nrow(x)</span><br><span class="line">ncol(x)</span><br><span class="line">dim(x)</span><br><span class="line">names(x)</span><br><span class="line">x[<span class="number">1</span>:<span class="number">3</span>,]</span><br><span class="line">x$Color</span><br><span class="line">y$Color</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 20</span></span><br><span class="line">data&lt;-read.table(<span class="string">"color.txt"</span>, header=<span class="literal">TRUE</span>, sep=<span class="string">"\t"</span>)</span><br><span class="line">data&lt;-read.table(<span class="string">"color.csv"</span>, header=<span class="literal">TRUE</span>, sep=<span class="string">","</span>)</span><br><span class="line">data&lt;-read.csv(<span class="string">"color.csv"</span>, header=<span class="literal">TRUE</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 24</span></span><br><span class="line">grade &lt;-read.csv(<span class="string">"data/grade.csv"</span>,header=<span class="literal">T</span>, stringsAsFactors = <span class="literal">FALSE</span>)</span><br><span class="line">student&lt;-read.csv(<span class="string">"data/student.csv"</span>,header=<span class="literal">T</span>, stringsAsFactors = <span class="literal">FALSE</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 25</span></span><br><span class="line">as.factor(c(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'a'</span>,<span class="string">'c'</span>))</span><br><span class="line">as.logical(c(<span class="number">0</span>,<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 26</span></span><br><span class="line">student[student$gender==<span class="string">'Female'</span>,]</span><br><span class="line"></span><br><span class="line"><span class="keyword">attach</span>(grade)</span><br><span class="line">grade[Chinese&gt;<span class="number">80</span>,]</span><br><span class="line">grade[Chinese&gt;<span class="number">80</span> &amp;&amp; Math&gt;<span class="number">80</span>,]</span><br><span class="line">grade[Chinese&gt;<span class="number">80</span> | Math&gt;<span class="number">80</span>,]</span><br><span class="line"><span class="keyword">detach</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 27</span></span><br><span class="line">grade[order(grade$Chinese),]  <span class="comment">#sort by Chinese asc</span></span><br><span class="line">grade[order(-grade$Chinese),] <span class="comment">#sort by Chinese desc</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 28</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#or use attach</span></span><br><span class="line"><span class="keyword">attach</span>(grade)</span><br><span class="line"><span class="comment">#sort by chinese asc</span></span><br><span class="line">grade[order(Chinese),]</span><br><span class="line"><span class="comment">#sort by chinese asc, English desc</span></span><br><span class="line">grade[order(Chinese,-English),]</span><br><span class="line"><span class="keyword">detach</span>(grade)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 29</span></span><br><span class="line">total&lt;-merge(student, grade, by=<span class="string">"name"</span>)</span><br><span class="line">head(total)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 30</span></span><br><span class="line"><span class="keyword">attach</span>(total)</span><br><span class="line"><span class="comment">#compute the average grade by class</span></span><br><span class="line">aggregate(total[c(<span class="string">"Chinese"</span>,<span class="string">"Math"</span>,<span class="string">"English"</span>,<span class="string">"Science"</span>)], by=list(class), FUN=mean)</span><br><span class="line"><span class="comment">#compute the average grade by class and gender</span></span><br><span class="line">aggregate(total[c(<span class="string">"Chinese"</span>,<span class="string">"Math"</span>,<span class="string">"English"</span>,<span class="string">"Science"</span>)], by=list(class, gender), FUN=mean)</span><br><span class="line"><span class="keyword">detach</span>(total)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 34</span></span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1</span>:<span class="number">10</span>) &#123;</span><br><span class="line">  print(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 35</span></span><br><span class="line">x &lt;- matrix(<span class="number">1</span>:<span class="number">6</span>, nrow=<span class="number">2</span>, ncol=<span class="number">3</span>, byrow=<span class="literal">T</span>)</span><br><span class="line"><span class="keyword">for</span>(i <span class="keyword">in</span> <span class="number">1</span>:nrow(x))&#123;</span><br><span class="line">  <span class="keyword">for</span> (j <span class="keyword">in</span> <span class="number">1</span>:ncol(x))&#123;</span><br><span class="line">    print(paste(i,j,x[i,j]))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 36</span></span><br><span class="line">count &lt;-<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span>(count &lt; <span class="number">10</span>) &#123;</span><br><span class="line">  print(count)</span><br><span class="line">  count &lt;- count + <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 37</span></span><br><span class="line">x&lt;-<span class="number">1</span></span><br><span class="line"><span class="keyword">while</span>(<span class="literal">TRUE</span>)&#123;	     <span class="comment">#infinite loops</span></span><br><span class="line">  <span class="keyword">if</span>(x&gt;<span class="number">10</span>)&#123;      <span class="comment">#terminate condition</span></span><br><span class="line">    <span class="keyword">break</span></span><br><span class="line">  &#125;</span><br><span class="line">  print(x)</span><br><span class="line">  x&lt;-x+<span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line">print(<span class="string">"outside the while loop"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 40</span></span><br><span class="line">my_add &lt;- <span class="keyword">function</span>(a,b)&#123;</span><br><span class="line">  <span class="keyword">return</span>(a+b)</span><br><span class="line">&#125;</span><br><span class="line">my_add(<span class="number">3</span>,<span class="number">5</span>)		</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 41</span></span><br><span class="line">my_add &lt;- <span class="keyword">function</span>(a, b=<span class="number">0</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> (a+b)</span><br><span class="line">&#125;</span><br><span class="line">my_add(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 42</span></span><br><span class="line">x1 &lt;- matrix(<span class="number">1</span>:<span class="number">6</span>, nrow=<span class="number">2</span>, ncol=<span class="number">3</span>, byrow=<span class="literal">T</span>)</span><br><span class="line">x2 &lt;- matrix(<span class="number">1</span>:<span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="literal">T</span>)</span><br><span class="line">x3 &lt;- matrix(byrow=<span class="literal">T</span>, <span class="number">1</span>:<span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#slide 43</span></span><br><span class="line">countPercent &lt;- <span class="keyword">function</span>(x, <span class="keyword">...</span>)&#123; </span><br><span class="line">  percent &lt;- round(x * <span class="number">100</span>, <span class="keyword">...</span>) </span><br><span class="line">  paste(percent, <span class="string">"%"</span>, sep = <span class="string">""</span>) </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">countPercent(<span class="number">0.87654</span>)</span><br><span class="line">countPercent(<span class="number">0.87654</span>, digits=<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R/" rel="tag"># R</a>
+          
+            <a href="/tags/Data-Mining/" rel="tag"># Data Mining</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Business/Management-Accounting/ITMC-Chapter-02-Learning-Objectives/" rel="next" title="[ ITMA ] Chapter 02 - Learning Objectives">
+                <i class="fa fa-chevron-left"></i> [ ITMA ] Chapter 02 - Learning Objectives
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Business/Management-Accounting/ITMC-Chapter-03-Step-and-Mixed-cost-Behavior/" rel="prev" title="[ ITMA ] Chapter 03 - Step- and Mixed-cost Behavior">
+                [ ITMA ] Chapter 03 - Step- and Mixed-cost Behavior <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Gary Dai</p>
+              <p class="site-description motion-element" itemprop="description">Notes about Business Analytics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DosakaLing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:gary_daiyu@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Dai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

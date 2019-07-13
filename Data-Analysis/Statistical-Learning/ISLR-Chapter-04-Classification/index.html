@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Classification,Linear Discriminant Analysis,R,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Last Chapter introduce linear regression as a basic tool for regression analysis. For this chapter, LDA and logit model would be introduced to solve classification problems This notes covers: Why not">
+<meta name="keywords" content="Classification,Linear Discriminant Analysis,R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ ISLR ] Chapter 04 - Classification">
+<meta property="og:url" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/index.html">
+<meta property="og:site_name" content="TusakaRin">
+<meta property="og:description" content="Last Chapter introduce linear regression as a basic tool for regression analysis. For this chapter, LDA and logit model would be introduced to solve classification problems This notes covers: Why not">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/roc.PNG">
+<meta property="og:updated_time" content="2019-07-13T11:59:48.785Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ ISLR ] Chapter 04 - Classification">
+<meta name="twitter:description" content="Last Chapter introduce linear regression as a basic tool for regression analysis. For this chapter, LDA and logit model would be introduced to solve classification problems This notes covers: Why not">
+<meta name="twitter:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/roc.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/">
+
+
+
+
+
+  <title>[ ISLR ] Chapter 04 - Classification | TusakaRin</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TusakaRin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is fantastic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary Dai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TusakaRin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ ISLR ] Chapter 04 - Classification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-12T15:18:53+08:00">
+                2019-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Analysis</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/Statistical-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Statistical Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>Last Chapter introduce linear regression as a basic tool for regression analysis. For this chapter, LDA and logit model would be introduced to solve classification problems</li>
+<li>This notes covers: <strong>Why not Linear Probability Model?</strong>, <strong>Logistic Regression (Logit Model)</strong>, <strong>Linear Discriminant Analysis</strong>, <strong>Comparison between Classification Methods</strong></li>
+</ul>
+<a id="more"></a>
+<h1 id="Why-Not-Linear-Regression"><a href="#Why-Not-Linear-Regression" class="headerlink" title="Why Not Linear Regression?"></a>Why Not Linear Regression?</h1><ul>
+<li>Hard to extend the model into a qualitative response with more than two levels</li>
+<li>The predicted value will exceed a reasonable range.</li>
+</ul>
+<h1 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h1><h2 id="The-logistic-model"><a href="#The-logistic-model" class="headerlink" title="The logistic model:"></a>The logistic model:</h2><h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition:"></a>Definition:</h3><ul>
+<li><p>$p(X) = \frac{1}{1+e^{\beta_0+\beta_1X}}$, which can be extend to various predictors</p>
+</li>
+<li><p>Manipulate the above model we get: $log(\frac{p(X)}{1-p(X)}) = \beta_0 + \beta_1X$</p>
+</li>
+<li>The formula: $\frac{p(X)}{1-p(X)}$ is called the <strong>odds</strong></li>
+<li>The left side of the equation is called <strong>log-odds</strong> or <strong>logit</strong></li>
+<li><strong>Interpretation</strong>: The rate of change in p(X) per unit change in X depends on the current value of X</li>
+</ul>
+<h3 id="Estimating-coefficients"><a href="#Estimating-coefficients" class="headerlink" title="Estimating coefficients"></a>Estimating coefficients</h3><ul>
+<li>Use maximum likelihood.</li>
+<li><p>The intuition: find the best $\beta_0$ and $\beta_1$ to make the observations in the sample are most likely to be chosen from the population.</p>
+</li>
+<li><p>The <strong>likelihood function</strong>: $l(\beta<em>0,\beta_1) = \prod</em>{i:y<em>i =1}p(x_i)\prod</em>{i’:y<em>{i’}=0}(1-p(x</em>{i’}))$</p>
+</li>
+<li>p-value and hypothesis test can be carried as linear regression, but <strong>$R^2$</strong> may become meaningless</li>
+</ul>
+<h2 id="Multiple-Logistic-Regression"><a href="#Multiple-Logistic-Regression" class="headerlink" title="Multiple Logistic Regression"></a>Multiple Logistic Regression</h2><ul>
+<li>A valid way to avoid <strong>Omitted variable bias </strong> or <strong>confounding</strong> in statistical learning</li>
+</ul>
+<h2 id="For-gt-2-response-Class"><a href="#For-gt-2-response-Class" class="headerlink" title="For &gt;2 response Class"></a>For &gt;2 response Class</h2><ul>
+<li>Model both $Pr(Y=Class_1|X) ​$ and $Pr(Y = Class_2 | X)​$</li>
+<li>The remaining $Pr(Y=Class_3) = 1-Pr(Y=Class_1|X)-Pr(Y = Class_2 | X)$</li>
+</ul>
+<h1 id="Linear-Discriminant-Analysis"><a href="#Linear-Discriminant-Analysis" class="headerlink" title="Linear Discriminant Analysis"></a>Linear Discriminant Analysis</h1><ul>
+<li>Bayes’ theorem: $Pr(Y=k|X=x) = \frac{\pi<em>kf_k(x)}{\sum</em>{l=1}^{K}\pi_lf_l(x)}$</li>
+<li><p>refer to $p_k(x)$ ,which is the left-hand of the equation as the <strong>posterior</strong>.</p>
+<ul>
+<li>refer to $\pi_k$ as <strong>prior</strong></li>
+<li>refer to $f_k(x)$ as <strong>density function</strong>, which is the density of x given its class k</li>
+</ul>
+</li>
+<li><p>Some insights: </p>
+<ul>
+<li>in the theorem, the <strong><em>prior</em></strong> is easier to estimate use the sample, simply count the number of observation and divided by number of all observations. Mathematically, $\widehat{prior} = \frac{n_k}{n}$</li>
+<li>the <strong><em>density</em></strong> however, is much more difficult. In the LDA, we estimate the density by making assumptions</li>
+<li>The objective of LDA is to divide two class as far as possible, and the insight is that <strong>we try to use the predictor or axises to maximize the distance between the average value of each class but minimize the variance of each class</strong> </li>
+</ul>
+</li>
+</ul>
+<h2 id="LDA-For-p-1-one-predictor"><a href="#LDA-For-p-1-one-predictor" class="headerlink" title="LDA For p = 1 (one predictor)"></a>LDA For p = 1 (one predictor)</h2><h3 id="Estimate-the-density"><a href="#Estimate-the-density" class="headerlink" title="Estimate the density"></a>Estimate the density</h3><ul>
+<li>$f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k}e^{-\frac{(x-\mu_k)^2}{2\sigma_k^2}}$</li>
+<li>Then taking the log of the equation: $Pr(Y=k|X=x) = \frac{\pi<em>kf_k(x)}{\sum</em>{l=1}^{K}\pi_lf_l(x)}$, we can show that it is equivalent to assigning the observation to the class for which $\delta_k(x) = x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}+log(\pi_k)$ is <strong>largest</strong></li>
+</ul>
+<h3 id="Estimate-mu-k-and-sigma-k"><a href="#Estimate-mu-k-and-sigma-k" class="headerlink" title="Estimate $\mu_k$ and $\sigma_k$"></a>Estimate $\mu_k$ and $\sigma_k$</h3><ul>
+<li>For each class: $\hat{\mu}<em>k = \frac{1}{n}\sum</em>{i:y_i=k}x_i​$</li>
+<li>Then we assume that the variance of predictor is all the same for each class. $\hat{\sigma}^2 = \frac{1}{n-K}\sum^K<em>{k=1}\sum^{}</em>{y_i=k}(x_i-\hat{\mu}_k)^2$</li>
+</ul>
+<h2 id="LDA-For-p-gt-1"><a href="#LDA-For-p-gt-1" class="headerlink" title="LDA For p &gt; 1"></a>LDA For p &gt; 1</h2><h3 id="Assumption"><a href="#Assumption" class="headerlink" title="Assumption:"></a>Assumption:</h3><ul>
+<li><p>Within each class, the observations are drawn from a <strong>same</strong> <strong>multi-variate normal distribution</strong></p>
+</li>
+<li><p>The covariance matrix of the density function of <strong>multi-variate normal distribution</strong> is the same for all classes.</p>
+</li>
+</ul>
+<h3 id="The-density"><a href="#The-density" class="headerlink" title="The density:"></a>The density:</h3><ul>
+<li>$f(x) = \frac{1}{(2\pi)^{p/2}|\sum|^{1/2}}e^{(-\frac{1}{2}(x-\mu)^T\sum^{-1}(x-\mu))}$</li>
+<li>Thus the <strong>discriminant</strong> is $\delta_k(x) = x^T\sum^{-1}\mu_k-\frac{1}{2}\mu_k^T\sum^{-1}\mu_k+log\pi_k$</li>
+</ul>
+<h3 id="Worth-noticing"><a href="#Worth-noticing" class="headerlink" title="Worth noticing:"></a>Worth noticing:</h3><ul>
+<li>Training error will usually lower than test error. Remember to avoid <strong>overfitting</strong> when the ratio of parameters p to number of samples n is large.</li>
+<li>The threshold should be modified to achieve the demand instead of simply minimizing the overall error rate</li>
+</ul>
+<h2 id="Adjusting-the-threshold"><a href="#Adjusting-the-threshold" class="headerlink" title="Adjusting the threshold"></a>Adjusting the threshold</h2><h3 id="Confusion-Matrix-Of-the-default-example"><a href="#Confusion-Matrix-Of-the-default-example" class="headerlink" title="Confusion Matrix(Of the default example)"></a>Confusion Matrix(Of the default example)</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>predicted/true</th>
+<th>no</th>
+<th>yes</th>
+<th>total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>no</td>
+<td>9644</td>
+<td>252</td>
+<td>9896</td>
+</tr>
+<tr>
+<td>yes</td>
+<td>23</td>
+<td>81</td>
+<td>104</td>
+</tr>
+<tr>
+<td>total</td>
+<td>9667</td>
+<td>333</td>
+<td>10000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>overall <strong>error rate</strong>: $ = \frac{23+252}{10000}$</p>
+</li>
+<li><p>However: The error rate of wrongly classified those who will default $= \frac{252}{333} = 75.7\%$, which is unacceptable</p>
+</li>
+<li>The term <strong>sensitivity</strong> of this example: <strong>True defaulters that are identified</strong></li>
+<li>The term <strong>specificity</strong> of this example: <strong>Non-defaulters that are correctly identified</strong></li>
+<li><p>So, we can say that the sum of sensitivity and specificity are the rate that a classifier made right decision.</p>
+</li>
+<li><p>The low rate of sensitivity actually comes from the Bayes Classifier: we classify an observation to the default class if $Pr(default = Yes|X=x) &gt; 0.5$, however, we can modify this to 0.2 if we want to increase the sensitivity at a cost of the specificity.</p>
+</li>
+</ul>
+<h3 id="ROC-Curve"><a href="#ROC-Curve" class="headerlink" title="ROC Curve"></a>ROC Curve</h3><ul>
+<li><p>Roc curve is a graphic for simultaneously displaying the two types of errors for all possible thresholds</p>
+</li>
+<li><p>It only works for two class classifier, the dashed line represents a random classifier. The best classifier should be the point (0,1)</p>
+</li>
+<li><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/roc.PNG">
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>true/predicted</th>
+<th>- or null</th>
+<th>+ or non-null</th>
+<th>total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>- or null</strong></td>
+<td>TN</td>
+<td>FP</td>
+<td>N</td>
+</tr>
+<tr>
+<td><strong>+ or non-null</strong></td>
+<td>FN</td>
+<td>TP</td>
+<td>P</td>
+</tr>
+<tr>
+<td><strong>total</strong></td>
+<td>N*</td>
+<td>P*</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>NAME</th>
+<th>DEFINITION</th>
+<th>SYNONYMS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>False Pos. rate</td>
+<td>FP/N</td>
+<td>type-I error, 1-Specificity</td>
+</tr>
+<tr>
+<td>True Pos, rate</td>
+<td>TP/P</td>
+<td>1-Type II error , power, sensitivity, recall</td>
+</tr>
+<tr>
+<td>Pos. Pred. value</td>
+<td>TP/P*</td>
+<td>Precision,1-false discovery proportion</td>
+</tr>
+<tr>
+<td>Neg. Pred. value</td>
+<td>TN/N*</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Quadratic-Discriminant-Analysis"><a href="#Quadratic-Discriminant-Analysis" class="headerlink" title="Quadratic Discriminant Analysis"></a>Quadratic Discriminant Analysis</h2><ul>
+<li><p>QDA assums that the observations from each class are drawn from a Gaussian distribution, and plugging estimates for the parameters into Bayes’ theorem that each class has its own covariance matrix.</p>
+</li>
+<li><p>Thus QDA involves plugging estimates for $\sum_k, \mu_k$ and $\pi_k$ </p>
+</li>
+<li>QDA estimates $K \times \frac{p(p-1)}{2}$ parameters, which is <strong>much more flexible</strong> than LDA</li>
+<li><strong>LDA</strong> may be better if there are fewer observations, but if the training set is large, the variance of the classifier is not a major concern(<strong>Use QDA</strong>)</li>
+</ul>
+<h1 id="Comparison-of-Classification-Methods"><a href="#Comparison-of-Classification-Methods" class="headerlink" title="Comparison of Classification Methods"></a>Comparison of Classification Methods</h1><ul>
+<li><p>As for logistic regression and LDA: Both methods are linear of X, the only difference lies in Logistic Regression use <strong>Maximum likelihood</strong> to estimate the parameters, while LDA makes an assumption of <strong>normal distribution</strong> and estimate the <strong>mean and variance</strong></p>
+</li>
+<li><p>If the dicision boundary is highly <strong>non-linear</strong>, then <strong>KNN</strong> is out-performed.</p>
+</li>
+<li>QDA serve as a <strong>compromise</strong> between the non-parametric KNN method and the linear LDA</li>
+<li>The flexibility level of KNN should be carefully chosen</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Classification/" rel="tag"># Classification</a>
+          
+            <a href="/tags/Linear-Discriminant-Analysis/" rel="tag"># Linear Discriminant Analysis</a>
+          
+            <a href="/tags/R/" rel="tag"># R</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/uncategorized/Hexo-Initialize-Hexo/" rel="next" title="[Hexo] Initialize Hexo">
+                <i class="fa fa-chevron-left"></i> [Hexo] Initialize Hexo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Hexo/Setting/HEXO-LATEX-IN-HEXO/" rel="prev" title="[ HEXO ] LATEX IN HEXO">
+                [ HEXO ] LATEX IN HEXO <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Gary Dai</p>
+              <p class="site-description motion-element" itemprop="description">Notes about Business Analytics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DosakaLing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:gary_daiyu@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Why-Not-Linear-Regression"><span class="nav-number">1.</span> <span class="nav-text">Why Not Linear Regression?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">2.</span> <span class="nav-text">Logistic Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-logistic-model"><span class="nav-number">2.1.</span> <span class="nav-text">The logistic model:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Definition"><span class="nav-number">2.1.1.</span> <span class="nav-text">Definition:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Estimating-coefficients"><span class="nav-number">2.1.2.</span> <span class="nav-text">Estimating coefficients</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Logistic-Regression"><span class="nav-number">2.2.</span> <span class="nav-text">Multiple Logistic Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#For-gt-2-response-Class"><span class="nav-number">2.3.</span> <span class="nav-text">For &gt;2 response Class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linear-Discriminant-Analysis"><span class="nav-number">3.</span> <span class="nav-text">Linear Discriminant Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-For-p-1-one-predictor"><span class="nav-number">3.1.</span> <span class="nav-text">LDA For p = 1 (one predictor)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Estimate-the-density"><span class="nav-number">3.1.1.</span> <span class="nav-text">Estimate the density</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Estimate-mu-k-and-sigma-k"><span class="nav-number">3.1.2.</span> <span class="nav-text">Estimate $\mu_k$ and $\sigma_k$</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LDA-For-p-gt-1"><span class="nav-number">3.2.</span> <span class="nav-text">LDA For p &gt; 1</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Assumption"><span class="nav-number">3.2.1.</span> <span class="nav-text">Assumption:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-density"><span class="nav-number">3.2.2.</span> <span class="nav-text">The density:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Worth-noticing"><span class="nav-number">3.2.3.</span> <span class="nav-text">Worth noticing:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adjusting-the-threshold"><span class="nav-number">3.3.</span> <span class="nav-text">Adjusting the threshold</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Confusion-Matrix-Of-the-default-example"><span class="nav-number">3.3.1.</span> <span class="nav-text">Confusion Matrix(Of the default example)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC-Curve"><span class="nav-number">3.3.2.</span> <span class="nav-text">ROC Curve</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quadratic-Discriminant-Analysis"><span class="nav-number">3.4.</span> <span class="nav-text">Quadratic Discriminant Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Comparison-of-Classification-Methods"><span class="nav-number">4.</span> <span class="nav-text">Comparison of Classification Methods</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Dai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

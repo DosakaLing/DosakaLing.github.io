@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Computer,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第一节课笔记">
+<meta name="keywords" content="Computer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ CIEM ] Chapter 02 - 数据库及其查询">
+<meta property="og:url" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/index.html">
+<meta property="og:site_name" content="TusakaRin">
+<meta property="og:description" content="第一节课笔记">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-7.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-8.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-9.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-92.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-10.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-11.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-121.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-122.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-123.png">
+<meta property="og:updated_time" content="2019-07-13T11:59:48.569Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ CIEM ] Chapter 02 - 数据库及其查询">
+<meta name="twitter:description" content="第一节课笔记">
+<meta name="twitter:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/">
+
+
+
+
+
+  <title>[ CIEM ] Chapter 02 - 数据库及其查询 | TusakaRin</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TusakaRin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is fantastic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-02-Database/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary Dai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TusakaRin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ CIEM ] Chapter 02 - 数据库及其查询</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-25T14:15:30+08:00">
+                2019-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Analysis</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/经管机/" itemprop="url" rel="index">
+                    <span itemprop="name">经管机</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>第一节课笔记</li>
+</ul>
+<a id="more"></a>
+<h1 id="第一节课"><a href="#第一节课" class="headerlink" title="第一节课"></a>第一节课</h1><h1 id="评分标准"><a href="#评分标准" class="headerlink" title="评分标准"></a>评分标准</h1><ul>
+<li><p>期中考试考前5章</p>
+</li>
+<li><p>平时作业</p>
+</li>
+<li>期末考试偏后面的章节，范围为全书</li>
+<li>要求是考勤</li>
+</ul>
+<h1 id="上课内容"><a href="#上课内容" class="headerlink" title="上课内容"></a>上课内容</h1><h2 id="数据库概述"><a href="#数据库概述" class="headerlink" title="数据库概述"></a>数据库概述</h2><h3 id="数据库定义"><a href="#数据库定义" class="headerlink" title="数据库定义"></a>数据库定义</h3><ul>
+<li>再计算机中，合理方法组织（与公司或者组织的业务互动和组织结构相对应），相关数据集合。</li>
+<li>可为各级经过授权的用户和信息系统所共享。</li>
+</ul>
+<h3 id="数据管理系统"><a href="#数据管理系统" class="headerlink" title="数据管理系统"></a>数据管理系统</h3><ul>
+<li>位于用户和操作系统之间</li>
+<li>负责数据库操作</li>
+</ul>
+<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><ul>
+<li>数据有联系，需要结构组织起来</li>
+<li><p>引用数据模型来描述数据及它们之间的关系</p>
+</li>
+<li><p>常用的数据模型：层次，网状，关系模型，面向对象模型</p>
+</li>
+</ul>
+<h2 id="表及其相互间的联系"><a href="#表及其相互间的联系" class="headerlink" title="表及其相互间的联系"></a>表及其相互间的联系</h2><h3 id="表"><a href="#表" class="headerlink" title="表"></a>表</h3><ul>
+<li>二维表</li>
+<li>字段，记录，关键字在字段名下加下划线</li>
+</ul>
+<h3 id="主键"><a href="#主键" class="headerlink" title="主键"></a>主键</h3><ul>
+<li>能够唯一确定一个记录的属性或者属性组</li>
+</ul>
+<h3 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h3><ul>
+<li>一对一</li>
+<li>一对多</li>
+<li>多对多（引入中间表转化为一对多关系）</li>
+</ul>
+<h2 id="建立ODBC数据源"><a href="#建立ODBC数据源" class="headerlink" title="建立ODBC数据源"></a>建立ODBC数据源</h2><ul>
+<li>数据源名字</li>
+<li>驱动程序</li>
+<li>数据库连接信息：链接的数据库的文件名</li>
+</ul>
+<h3 id="odbc数据库建立"><a href="#odbc数据库建立" class="headerlink" title="odbc数据库建立"></a>odbc数据库建立</h3><ul>
+<li>利用microsoft query定义odbc数据源</li>
+<li><p>书上例题2-2：</p>
+<ul>
+<li><p>打开excel</p>
+</li>
+<li><p>选择数据</p>
+</li>
+<li><p>获取数据，其他来源，microsoft query</p>
+<ul>
+<li>可以选择是否使用查询向导，同意不使用查询向导</li>
+</ul>
+</li>
+<li><p>新建数据源</p>
+</li>
+<li><p>打开对话框：</p>
+<ul>
+<li>nw</li>
+<li>microsoft access driver (.mdb,.accdb)</li>
+<li>点击连接<ul>
+<li>点击选择</li>
+<li>选择时，下载到d盘，经济管理中的计算机应用<ul>
+<li>选择表以后点击三次确定</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>单表查询：</p>
+<ul>
+<li>打开一个excel文件</li>
+<li>在其他来源，microsoft query里可以看到新建好的数据源</li>
+<li><p>双击字段名</p>
+</li>
+<li><p>文件，将数据返回excel</p>
+</li>
+<li>现有工作表，从输入框里的单元格开始<h2 id="书上例题2-5："><a href="#书上例题2-5：" class="headerlink" title="书上例题2-5："></a>书上例题2-5：</h2></li>
+</ul>
+</li>
+<li><p>正常添加表</p>
+</li>
+<li>视图，条件：<ul>
+<li>在中部出现了条件的区域</li>
+</ul>
+</li>
+<li>条件字段：地区<ul>
+<li>值：华东</li>
+<li>回车<h2 id="书上例题2-6："><a href="#书上例题2-6：" class="headerlink" title="书上例题2-6："></a>书上例题2-6：</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>条件筛选框中或输入：华南</p>
+<h2 id="书上例题2-7"><a href="#书上例题2-7" class="headerlink" title="书上例题2-7"></a>书上例题2-7</h2><img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-7.png">
+<h2 id="书上例题2-8"><a href="#书上例题2-8" class="headerlink" title="书上例题2-8"></a>书上例题2-8</h2><img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-8.png">
+<h2 id="书上例题2-9"><a href="#书上例题2-9" class="headerlink" title="书上例题2-9"></a>书上例题2-9</h2><img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-9.png">
+<img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-92.png">
+<h2 id="书上例题2-10"><a href="#书上例题2-10" class="headerlink" title="书上例题2-10"></a>书上例题2-10</h2><img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-10.png">
+<ul>
+<li>内连接：将多个表中<strong>符合条件的记录</strong>挑选出来组成一个结果集。</li>
+</ul>
+<h2 id="书上例题2-11"><a href="#书上例题2-11" class="headerlink" title="书上例题2-11"></a>书上例题2-11</h2><img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-11.png">
+<h2 id="书上例题2-12"><a href="#书上例题2-12" class="headerlink" title="书上例题2-12"></a>书上例题2-12</h2><ul>
+<li>手动添加联系（拖动一个字段名到另一个表的关联字段）</li>
+<li>添加中间表</li>
+</ul>
+<img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-121.png">
+<img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-122.png">
+<img src="/Data-Analysis/经管机/CIEM-Chapter-02-Database/2-123.png">
+<h2 id="书上例题2-13"><a href="#书上例题2-13" class="headerlink" title="书上例题2-13"></a>书上例题2-13</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Computer/" rel="tag"># Computer</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Programing/Python/Hands-On-Machine-Learning/HOML-Chapter-09-Up-and-Running-with-TensorFlow/" rel="next" title="[ HOML ] Chapter 09 - Up and Running with TensorFlow">
+                <i class="fa fa-chevron-left"></i> [ HOML ] Chapter 09 - Up and Running with TensorFlow
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Operations-Research/Managerial-operations-research/CMOR-Lecture-01-Introduction/" rel="prev" title="[ CMOR ] Lecture 01 - Introduction">
+                [ CMOR ] Lecture 01 - Introduction <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Gary Dai</p>
+              <p class="site-description motion-element" itemprop="description">Notes about Business Analytics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DosakaLing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:gary_daiyu@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#第一节课"><span class="nav-number">1.</span> <span class="nav-text">第一节课</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#评分标准"><span class="nav-number">2.</span> <span class="nav-text">评分标准</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#上课内容"><span class="nav-number">3.</span> <span class="nav-text">上课内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库概述"><span class="nav-number">3.1.</span> <span class="nav-text">数据库概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库定义"><span class="nav-number">3.1.1.</span> <span class="nav-text">数据库定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据管理系统"><span class="nav-number">3.1.2.</span> <span class="nav-text">数据管理系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据模型"><span class="nav-number">3.1.3.</span> <span class="nav-text">数据模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表及其相互间的联系"><span class="nav-number">3.2.</span> <span class="nav-text">表及其相互间的联系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表"><span class="nav-number">3.2.1.</span> <span class="nav-text">表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主键"><span class="nav-number">3.2.2.</span> <span class="nav-text">主键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#联系"><span class="nav-number">3.2.3.</span> <span class="nav-text">联系</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立ODBC数据源"><span class="nav-number">3.3.</span> <span class="nav-text">建立ODBC数据源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#odbc数据库建立"><span class="nav-number">3.3.1.</span> <span class="nav-text">odbc数据库建立</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-5："><span class="nav-number">3.4.</span> <span class="nav-text">书上例题2-5：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-6："><span class="nav-number">3.5.</span> <span class="nav-text">书上例题2-6：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-7"><span class="nav-number">3.6.</span> <span class="nav-text">书上例题2-7</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-8"><span class="nav-number">3.7.</span> <span class="nav-text">书上例题2-8</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-9"><span class="nav-number">3.8.</span> <span class="nav-text">书上例题2-9</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-10"><span class="nav-number">3.9.</span> <span class="nav-text">书上例题2-10</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-11"><span class="nav-number">3.10.</span> <span class="nav-text">书上例题2-11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-12"><span class="nav-number">3.11.</span> <span class="nav-text">书上例题2-12</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#书上例题2-13"><span class="nav-number">3.12.</span> <span class="nav-text">书上例题2-13</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Dai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

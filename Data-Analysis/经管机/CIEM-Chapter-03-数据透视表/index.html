@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Computer,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数据透视表和D函数 数据分类汇总分析">
+<meta name="keywords" content="Computer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ CIEM ] Chapter 03 - 数据透视表">
+<meta property="og:url" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/index.html">
+<meta property="og:site_name" content="TusakaRin">
+<meta property="og:description" content="数据透视表和D函数 数据分类汇总分析">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/321.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/322.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/323.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/331.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/332.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/341.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/342.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/343.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/351.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/352.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/361.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/362.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/371.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/372.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/373.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1121.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1122.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/373.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1121.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1132.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3121.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3122.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3131.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3132.png">
+<meta property="og:updated_time" content="2019-07-13T11:59:48.582Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ CIEM ] Chapter 03 - 数据透视表">
+<meta name="twitter:description" content="数据透视表和D函数 数据分类汇总分析">
+<meta name="twitter:image" content="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/321.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/">
+
+
+
+
+
+  <title>[ CIEM ] Chapter 03 - 数据透视表 | TusakaRin</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TusakaRin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is fantastic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary Dai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TusakaRin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ CIEM ] Chapter 03 - 数据透视表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-10T22:09:23+08:00">
+                2019-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Analysis</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/经管机/" itemprop="url" rel="index">
+                    <span itemprop="name">经管机</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>数据透视表和D函数</li>
+<li>数据分类汇总分析</li>
+</ul>
+<a id="more"></a>
+<h1 id="例题3-2：数据透视表和数据透视图"><a href="#例题3-2：数据透视表和数据透视图" class="headerlink" title="例题3-2：数据透视表和数据透视图"></a>例题3-2：数据透视表和数据透视图</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/321.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/322.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>打开原始数据</li>
+<li>选中一个单元格，插入-&gt;数据透视表<ul>
+<li>选中第一行，按ctrl-shift-↓</li>
+<li>新工作表</li>
+<li>确定</li>
+</ul>
+</li>
+<li>拖动字段：</li>
+</ul>
+<img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/323.png">
+<ul>
+<li><p>右键数据透视表，<em>数据透视表选项</em>，<em>汇总和筛选</em>，<em>显示行统计，显示列统计</em></p>
+</li>
+<li><p>点击数据透视表，插入，推荐的图标，簇状柱形图</p>
+</li>
+</ul>
+<h1 id="例题3-3：外部数据源制作数据透视表"><a href="#例题3-3：外部数据源制作数据透视表" class="headerlink" title="例题3-3：外部数据源制作数据透视表"></a>例题3-3：外部数据源制作数据透视表</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/331.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/332.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>alt-d-p<ul>
+<li>外部数据源</li>
+<li>获取数据</li>
+<li>选择excel文件以后选择合适的字段</li>
+</ul>
+</li>
+<li>将结果返回excel</li>
+<li>完成数据透视表</li>
+</ul>
+<h1 id="例题3-4：改变分类"><a href="#例题3-4：改变分类" class="headerlink" title="例题3-4：改变分类"></a>例题3-4：改变分类</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/341.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/342.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>数据透视表</p>
+<ul>
+<li><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/343.png">
+</li>
+</ul>
+</li>
+<li><p>右键江苏：移动，上移</p>
+</li>
+<li>右键山东：移动，移动至开头</li>
+<li><p>分类汇总</p>
+<ul>
+<li>选中华东的三省，右键组合，然后在数据组1处修改为华东</li>
+<li>华南同理</li>
+</ul>
+</li>
+<li><p>在右侧的字段选项中，点击省份2，字段设置，地区</p>
+</li>
+<li>在行字段添加：价位</li>
+<li>在列字段添加：渠道</li>
+<li><p>不显示二级分类汇总：</p>
+<ul>
+<li>设计，分类汇总，不显示分类汇总</li>
+</ul>
+</li>
+<li><p>筛选行标签，可以勾选全部或者部分数据</p>
+</li>
+<li>修改汇总字段名称或者汇总方式：求和项。。。，字段值设置，自定义名称，汇总方式</li>
+</ul>
+<h1 id="例题3-5：时间序列"><a href="#例题3-5：时间序列" class="headerlink" title="例题3-5：时间序列"></a>例题3-5：时间序列</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/351.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/352.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>选中一个日期</li>
+<li>右键，组合<ul>
+<li>选中月，年</li>
+<li>确定</li>
+</ul>
+</li>
+<li>选中b5:b30，选择开始，数字，减少小数位数</li>
+<li>制作数据透视图：<ul>
+<li>插入-图表-折线图-带数据标记的折线图</li>
+<li>右键选中数据序列，添加趋势线</li>
+<li>显示公式，显示R平方值</li>
+</ul>
+</li>
+</ul>
+<h1 id="例题3-6：频率分布"><a href="#例题3-6：频率分布" class="headerlink" title="例题3-6：频率分布"></a>例题3-6：频率分布</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/361.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/362.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>创建数据透视表<ul>
+<li>值：数量，行：订购日期，列：数量，筛选：产品名称</li>
+</ul>
+</li>
+<li>组合年月</li>
+<li>将年，月拖动到筛选</li>
+<li>将数量从列拖动到行</li>
+<li>右键一个数量，然后组合，步长设为10</li>
+<li>调整为百分比：<ul>
+<li>左键值/计数项：数量</li>
+<li>字段设置</li>
+<li>值显示方式</li>
+<li>总计的百分比</li>
+</ul>
+</li>
+</ul>
+<h1 id="例题3-7：计算百分比"><a href="#例题3-7：计算百分比" class="headerlink" title="例题3-7：计算百分比"></a>例题3-7：计算百分比</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/371.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/372.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/373.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>数据透视表<ul>
+<li>行：订购日期，值：销售额</li>
+</ul>
+</li>
+<li>分类订购日期为订购年<ul>
+<li>行：公司名称</li>
+<li>筛选：订购年</li>
+</ul>
+</li>
+<li>选中行标签筛选箭头，其它排序选项，降序排列，求和项，销售额</li>
+<li>选中前41个客户，组合，修改名称为重要客户</li>
+<li><p>再拖两个销售额到数值，选择计数。然后两个都改成列汇总的百分比</p>
+</li>
+<li><p>插入数据透视图</p>
+<ul>
+<li>选中图例，设置数据系列格式</li>
+<li>把看不见的调整为次坐标轴</li>
+</ul>
+</li>
+</ul>
+<h1 id="例题3-11：计算D函数，"><a href="#例题3-11：计算D函数，" class="headerlink" title="例题3-11：计算D函数，"></a>例题3-11：计算D函数，</h1><h2 id="Part-1"><a href="#Part-1" class="headerlink" title="Part 1"></a>Part 1</h2><ul>
+<li>公式，插入函数，数据库，Dsum<ul>
+<li>第一个参数选择全部原始数据</li>
+<li>第二个参数手动输入，净销售额</li>
+<li>第三个参数选择设置好的条件</li>
+</ul>
+</li>
+</ul>
+<h2 id="Part-2"><a href="#Part-2" class="headerlink" title="Part 2"></a>Part 2</h2><ul>
+<li>在h2单元格输入：<ul>
+<li>=D5（也就是计算方法，就是刚才的D函数）</li>
+</ul>
+</li>
+<li>选中模拟表位置</li>
+<li>数据，模拟运算，模拟运算表</li>
+<li>需要把列中每一个分别带入E3，所以在引用列的单元格输入E3</li>
+</ul>
+<h2 id="Part3"><a href="#Part3" class="headerlink" title="Part3"></a>Part3</h2><ul>
+<li>和上面的步骤完全相同</li>
+</ul>
+<h1 id="例题3-11-2：控件"><a href="#例题3-11-2：控件" class="headerlink" title="例题3-11-2：控件"></a>例题3-11-2：控件</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1121.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1122.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/373.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>文件-选项-自定义功能区-勾上开发工具</p>
+<ul>
+<li>插入，下拉框</li>
+<li><p>右键控件-设置控件格式</p>
+<ul>
+<li>数据源区域：B9：B14</li>
+<li>单元格链接：B8（B8单元格里是几，就选B9到B14当中的第几行）</li>
+</ul>
+</li>
+<li><p>在条件区域D3：index</p>
+<ul>
+<li>第一个参数：抽取范围：b9:b14</li>
+<li>第二个参数：抽取行：B8</li>
+<li>第三个参数：抽取列：1</li>
+</ul>
+</li>
+<li>画图：<ul>
+<li>选中G3:H8</li>
+<li>选中坐标：设置坐标轴格式<ul>
+<li>0~50000</li>
+</ul>
+</li>
+<li>题目：<ul>
+<li>在K2单元格输入题目</li>
+<li>=D3 &amp; “省各类产品净销售额总计图标”</li>
+<li>把标题放在图里面：插入文本框</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>处理全部：<ul>
+<li>在D3：=IF(B8=1,””,INDEX(B9:B14,B8,1))</li>
+</ul>
+</li>
+</ul>
+<h1 id="例题3-11-3：更多的控件"><a href="#例题3-11-3：更多的控件" class="headerlink" title="例题3-11-3：更多的控件"></a>例题3-11-3：更多的控件</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1121.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/1132.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>日期的第一个公式：B3： =IF(C8=1,”&gt;=2009/1/1”,”&gt;=”&amp;INDEX(C9:C12,C8)&amp;”/1/1”)</li>
+<li>C3：=IF(C8=1,”&lt;=”&amp;”2011/12/31”,”&lt;=”&amp;INDEX(C9:C12,C8,1)&amp;”/12/31”)</li>
+<li>D5：=DSUM(原始数据,INDEX(D9:D10,D8),B2:E3)</li>
+</ul>
+<h1 id="例题3-12"><a href="#例题3-12" class="headerlink" title="例题3-12"></a>例题3-12</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3121.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3122.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>订购年月：A5：=DATE(YEAR(B5),MONTH(B5),1)</li>
+<li><p>C5：=DSUM(Northwind公司销售数据!A1:D2158,”销售额”,B2:C3)</p>
+</li>
+<li><p>F3：1996/7/1</p>
+</li>
+<li>制作模拟运算表（选的大）</li>
+<li><p>做一个控件</p>
+</li>
+<li><p>做图：从F3开始选，选的少</p>
+<ul>
+<li>修改数据标记</li>
+<li>添加趋势线，选中横坐标，然后修改为<strong>文本坐标轴</strong></li>
+<li>坐标轴选项，对齐方式，可以更改旋转角度</li>
+</ul>
+</li>
+</ul>
+<h1 id="例题3-13"><a href="#例题3-13" class="headerlink" title="例题3-13"></a>例题3-13</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原始数据</th>
+<th>最终效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3131.png"></td>
+<td><img src="/Data-Analysis/经管机/CIEM-Chapter-03-数据透视表/3132.png"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>C5：=DSUM(原始数据,”销售额”,B2:B3)</li>
+<li>模拟运算表：<ul>
+<li>f3=c5</li>
+<li>引用列：c5</li>
+</ul>
+</li>
+<li>j4：=LARGE($F$4:$F$92,H4)，第几大，范围不能变</li>
+<li><p>匹配最大值的公司名：i4：=INDEX($E$4:$E$92,MATCH(J4,$F$4:$F$92,0))</p>
+<ul>
+<li>match函数的用法：<ul>
+<li>第一个参数：要找的数</li>
+<li>第二个参数：寻找范围</li>
+<li>第三个参数：寻找方式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>最后画图就行</p>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Computer/" rel="tag"># Computer</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Business/ACCA/AA/ACAA-Chapter-01-Audit-and-Other-Assurance/" rel="next" title="[ ACAA ] Chapter 01 - Audit and Other Assurance">
+                <i class="fa fa-chevron-left"></i> [ ACAA ] Chapter 01 - Audit and Other Assurance
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Programing/Python/Memo/QUAN-Use-Pandas-to-Treat-Time-Series-Data/" rel="prev" title="[ QUAN ] Use Pandas to Treat Time Series Data">
+                [ QUAN ] Use Pandas to Treat Time Series Data <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Gary Dai</p>
+              <p class="site-description motion-element" itemprop="description">Notes about Business Analytics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DosakaLing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:gary_daiyu@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-2：数据透视表和数据透视图"><span class="nav-number">1.</span> <span class="nav-text">例题3-2：数据透视表和数据透视图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-3：外部数据源制作数据透视表"><span class="nav-number">2.</span> <span class="nav-text">例题3-3：外部数据源制作数据透视表</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-4：改变分类"><span class="nav-number">3.</span> <span class="nav-text">例题3-4：改变分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-5：时间序列"><span class="nav-number">4.</span> <span class="nav-text">例题3-5：时间序列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-6：频率分布"><span class="nav-number">5.</span> <span class="nav-text">例题3-6：频率分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-7：计算百分比"><span class="nav-number">6.</span> <span class="nav-text">例题3-7：计算百分比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-11：计算D函数，"><span class="nav-number">7.</span> <span class="nav-text">例题3-11：计算D函数，</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-1"><span class="nav-number">7.1.</span> <span class="nav-text">Part 1</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part-2"><span class="nav-number">7.2.</span> <span class="nav-text">Part 2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Part3"><span class="nav-number">7.3.</span> <span class="nav-text">Part3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-11-2：控件"><span class="nav-number">8.</span> <span class="nav-text">例题3-11-2：控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-11-3：更多的控件"><span class="nav-number">9.</span> <span class="nav-text">例题3-11-3：更多的控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-12"><span class="nav-number">10.</span> <span class="nav-text">例题3-12</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例题3-13"><span class="nav-number">11.</span> <span class="nav-text">例题3-13</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Dai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

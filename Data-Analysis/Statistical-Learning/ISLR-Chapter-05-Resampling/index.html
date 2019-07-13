@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Resampling,Statistical Learning,Data Analysis,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="To estimate test error properly, there are different ways to do this. For example, some methods make a mathematical adjustment to the training error rate to estimate the test error rate. Other method">
+<meta name="keywords" content="Resampling,Statistical Learning,Data Analysis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ ISLR ] Chapter 05 - Resampling">
+<meta property="og:url" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/index.html">
+<meta property="og:site_name" content="TusakaRin">
+<meta property="og:description" content="To estimate test error properly, there are different ways to do this. For example, some methods make a mathematical adjustment to the training error rate to estimate the test error rate. Other method">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/vsa.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/vsr.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/loocv.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/loocvr.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/kfcva.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/kfcvr.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/compare.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/simu.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/boots.png">
+<meta property="og:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/seb.png">
+<meta property="og:updated_time" content="2019-07-13T11:59:48.796Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ ISLR ] Chapter 05 - Resampling">
+<meta name="twitter:description" content="To estimate test error properly, there are different ways to do this. For example, some methods make a mathematical adjustment to the training error rate to estimate the test error rate. Other method">
+<meta name="twitter:image" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/vsa.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/">
+
+
+
+
+
+  <title>[ ISLR ] Chapter 05 - Resampling | TusakaRin</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TusakaRin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is fantastic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary Dai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TusakaRin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ ISLR ] Chapter 05 - Resampling</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-14T17:43:19+08:00">
+                2019-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Analysis</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data-Analysis/Statistical-Learning/" itemprop="url" rel="index">
+                    <span itemprop="name">Statistical Learning</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>To estimate test error properly, there are different ways to do this. For example, some methods make a <strong>mathematical adjustment</strong> to <strong>the training error rate</strong> to estimate the test error rate. Other methods like cross validation, holds out a <strong>subset</strong> of the training observation from the fitting process.</li>
+<li>The notes will cover <strong>leave on out</strong>, <strong>k-fold</strong>, and <strong>bias-variance trade off</strong> of <strong>Cross Validation</strong>, and <strong>Bootstrap</strong>.</li>
+</ul>
+<a id="more"></a>
+<h1 id="Cross-Validation"><a href="#Cross-Validation" class="headerlink" title="Cross-Validation"></a>Cross-Validation</h1><h2 id="The-Validation-Set-Approach"><a href="#The-Validation-Set-Approach" class="headerlink" title="The Validation Set Approach"></a>The Validation Set Approach</h2><ul>
+<li><p>Random <strong>split</strong> the data ten times, then use each of them to test the polynomial formula of different powers.</p>
+</li>
+<li><p>The result:</p>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/vsa.png"></th>
+<th style="text-align:center"><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/vsr.png"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">The approach</td>
+<td style="text-align:center">The result</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>Drawbacks</strong>:<ul>
+<li>As is shown in the right column of the table, the estimate of test error is very variable</li>
+<li>In the validation set approach, only a subset of the observations are used to fit the model, resulting an over estimate of the test error rate compared to use the whole dataset to train the model.</li>
+</ul>
+</li>
+</ul>
+<h2 id="LOOCV"><a href="#LOOCV" class="headerlink" title="LOOCV"></a>LOOCV</h2><ul>
+<li>The result:</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/loocv.png"></th>
+<th><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/loocvr.png"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The approach</td>
+<td>The result</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>The estimate of the test error rate is: $CV<em>{(n)} = \frac{1}{n}\sum^n</em>{i=1}MSE_i$ of which, $MSE_i = (y_i-\hat{y}_i)^2$</p>
+</li>
+<li><p>An simplify of the LOOCV if the model is polynomial or least square linear:</p>
+<ul>
+<li>$CV<em>{(n)} = \frac{1}{n}\sum^n</em>{i=1}(\frac{y_i-\hat{y}_i}{1-h_i})^2$</li>
+<li>Where hi will be described later in the chapter about linear regression</li>
+</ul>
+</li>
+</ul>
+<h2 id="k-Fold-Cross-Validation"><a href="#k-Fold-Cross-Validation" class="headerlink" title="k-Fold Cross-Validation"></a>k-Fold Cross-Validation</h2><ul>
+<li>The result:</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/kfcva.png"></th>
+<th><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/kfcvr.png"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The approach</td>
+<td>The result</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><em>the 10-fold CV was run nine separate times, each with a different random split of the data into ten parts</em></li>
+</ul>
+<h2 id="Comparison-between-these-approaches"><a href="#Comparison-between-these-approaches" class="headerlink" title="Comparison between these approaches"></a>Comparison between these approaches</h2><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/compare.png">
+<ul>
+<li>Some times, if we only interest in the <strong>location</strong> of the parameter in order to minimize the test error instead of the <strong>test error itself</strong>, then loocv and k-fold can always produce a good result.</li>
+</ul>
+<h2 id="Bias-Variance-Trade-Off-of-“K”"><a href="#Bias-Variance-Trade-Off-of-“K”" class="headerlink" title="Bias-Variance Trade-Off of “K”"></a>Bias-Variance Trade-Off of “K”</h2><ul>
+<li>K-Fold often gives more accurate estimates of the test error rate than does LOOCV</li>
+</ul>
+<h3 id="Bias"><a href="#Bias" class="headerlink" title="Bias:"></a>Bias:</h3><ul>
+<li>Validation set approach use only a part of the dataset, so it may be very biased to estimate test error rate.</li>
+<li>LOOCV give approximately unbiased estimates of the test error, since almost all the observations are used to fit the model.</li>
+<li>The k-fold test provides an intermediate bias in estimating the test error rate.</li>
+</ul>
+<h3 id="Variance"><a href="#Variance" class="headerlink" title="Variance:"></a>Variance:</h3><ul>
+<li>LOOCV trained n models which are highly correlated with each other, resulting in higher <strong>variance</strong></li>
+<li>K-fold validation train models which are less correlated with each other.</li>
+<li>The insight is: the mean of some highly correlated quantities has higher variance.</li>
+</ul>
+<h1 id="The-Bootstrap"><a href="#The-Bootstrap" class="headerlink" title="The Bootstrap"></a>The Bootstrap</h1><h2 id="An-example"><a href="#An-example" class="headerlink" title="An example:"></a>An example:</h2><ul>
+<li><p>Suppose we want to minimize the variance of an investment: $Var(\alpha X+(1-\alpha)Y)$</p>
+</li>
+<li><p>Thus $\alpha = \frac{\sigma^2<em>Y-\sigma</em>{XY}}{\sigma^2<em>X+\sigma^2_Y-2\sigma</em>{XY}}$ can minimize the above value</p>
+</li>
+<li>Use 1000 times of simulation to estimate $\alpha$, and $\hat{\alpha}_r$ is very close to true $ \alpha$</li>
+<li>The standard deviation is $SE(\widehat{\alpha}) = \sqrt{\frac{1}{1000}\sum^{1000}_{r=1}(\hat{\alpha}_r-\bar{\alpha})^2}$</li>
+<li>The result of <strong>simulation</strong> is the orange one:<ul>
+<li><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/simu.png">
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Bootstrap"><a href="#Bootstrap" class="headerlink" title="Bootstrap"></a>Bootstrap</h2><ul>
+<li>A method which <strong>repeatedly sampling</strong> from <strong>original data set</strong></li>
+<li>The method is illustrated below:<ul>
+<li><img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/boots.png"></li>
+</ul>
+</li>
+<li>And the standard error is: <img src="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/seb.png"></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Resampling/" rel="tag"># Resampling</a>
+          
+            <a href="/tags/Statistical-Learning/" rel="tag"># Statistical Learning</a>
+          
+            <a href="/tags/Data-Analysis/" rel="tag"># Data Analysis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/" rel="next" title="[ ISLR ] Chapter 04 - Use R to Do Classification">
+                <i class="fa fa-chevron-left"></i> [ ISLR ] Chapter 04 - Use R to Do Classification
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/uncategorized/SUMR-Collection-of-Commands-in-R/" rel="prev" title="[ SUMR ] Collection of Commands in R">
+                [ SUMR ] Collection of Commands in R <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Gary Dai</p>
+              <p class="site-description motion-element" itemprop="description">Notes about Business Analytics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DosakaLing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:gary_daiyu@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cross-Validation"><span class="nav-number">1.</span> <span class="nav-text">Cross-Validation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Validation-Set-Approach"><span class="nav-number">1.1.</span> <span class="nav-text">The Validation Set Approach</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LOOCV"><span class="nav-number">1.2.</span> <span class="nav-text">LOOCV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#k-Fold-Cross-Validation"><span class="nav-number">1.3.</span> <span class="nav-text">k-Fold Cross-Validation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Comparison-between-these-approaches"><span class="nav-number">1.4.</span> <span class="nav-text">Comparison between these approaches</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bias-Variance-Trade-Off-of-“K”"><span class="nav-number">1.5.</span> <span class="nav-text">Bias-Variance Trade-Off of “K”</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bias"><span class="nav-number">1.5.1.</span> <span class="nav-text">Bias:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Variance"><span class="nav-number">1.5.2.</span> <span class="nav-text">Variance:</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Bootstrap"><span class="nav-number">2.</span> <span class="nav-text">The Bootstrap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#An-example"><span class="nav-number">2.1.</span> <span class="nav-text">An example:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bootstrap"><span class="nav-number">2.2.</span> <span class="nav-text">Bootstrap</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Dai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Data Cleaning,Data Mining,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Outline: Data Data selection Data cleaning Data normalization Data discretization equal width, equal depth, cluster analysis   Dimension reduction Feature selection Feature extraction: PCA">
+<meta name="keywords" content="Data Cleaning,Data Mining">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ ITDM ] Lecture 3 - Data Cleaning">
+<meta property="og:url" content="http://yoursite.com/Programing/R/Data-Mining/ITDM-Lecture-3-Data-Cleaning/index.html">
+<meta property="og:site_name" content="TusakaRin">
+<meta property="og:description" content="Outline: Data Data selection Data cleaning Data normalization Data discretization equal width, equal depth, cluster analysis   Dimension reduction Feature selection Feature extraction: PCA">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-07-13T11:59:48.824Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ ITDM ] Lecture 3 - Data Cleaning">
+<meta name="twitter:description" content="Outline: Data Data selection Data cleaning Data normalization Data discretization equal width, equal depth, cluster analysis   Dimension reduction Feature selection Feature extraction: PCA">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Programing/R/Data-Mining/ITDM-Lecture-3-Data-Cleaning/">
+
+
+
+
+
+  <title>[ ITDM ] Lecture 3 - Data Cleaning | TusakaRin</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TusakaRin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is fantastic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Programing/R/Data-Mining/ITDM-Lecture-3-Data-Cleaning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary Dai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TusakaRin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ ITDM ] Lecture 3 - Data Cleaning</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-15T15:47:40+08:00">
+                2019-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/" itemprop="url" rel="index">
+                    <span itemprop="name">Programing</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/R/" itemprop="url" rel="index">
+                    <span itemprop="name">R</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/R/Data-Mining/" itemprop="url" rel="index">
+                    <span itemprop="name">Data Mining</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>Outline:<ul>
+<li>Data</li>
+<li>Data selection</li>
+<li>Data cleaning</li>
+<li>Data normalization</li>
+<li>Data discretization<ul>
+<li>equal width, equal depth, cluster analysis</li>
+</ul>
+</li>
+<li>Dimension reduction<ul>
+<li>Feature selection</li>
+<li>Feature extraction: PCA</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<h1 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h1><ul>
+<li>A collection of data objects and their attributes</li>
+<li><p><strong>Attribute</strong>: property or characteristic of an object</p>
+<ul>
+<li>variable, field, characteristic, or feature</li>
+</ul>
+</li>
+<li><p>A collection of attrubures describe an object</p>
+<ul>
+<li>record, point, case, sample, entity, or instance</li>
+</ul>
+</li>
+</ul>
+<h2 id="Types-of-attrubutes"><a href="#Types-of-attrubutes" class="headerlink" title="Types of attrubutes"></a>Types of attrubutes</h2><ul>
+<li>Nominal<ul>
+<li>id numbers, eye color, zip codes</li>
+</ul>
+</li>
+<li>Ordinal<ul>
+<li>rankings, grades, height</li>
+</ul>
+</li>
+<li>Interval<ul>
+<li>calendar dates, temperatures in Celsius or Fahrenheit</li>
+</ul>
+</li>
+<li>Ratio<ul>
+<li>temperature in Kelvin, length, time, counts</li>
+</ul>
+</li>
+</ul>
+<h2 id="Properties-of-Attributes"><a href="#Properties-of-Attributes" class="headerlink" title="Properties of Attributes"></a>Properties of Attributes</h2><ul>
+<li>Distinctness: =&amp;!=</li>
+<li>Order: &lt;&gt;</li>
+<li>Addition: + -</li>
+<li>Multiplication: */</li>
+</ul>
+<hr>
+<ul>
+<li>Nominal attribute: distinctness</li>
+<li>Ordinal attribute: distinctness &amp; order</li>
+<li>interval attribute: distinctness, order &amp; addition</li>
+<li>ratio attribute: all four properties</li>
+</ul>
+<h1 id="Data-Selection"><a href="#Data-Selection" class="headerlink" title="Data Selection"></a>Data Selection</h1><h2 id="Sampling"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</h2><ul>
+<li>main technique</li>
+<li>often used for both <strong>preliminary</strong> investigation of the data and the <strong>final</strong> data analysis</li>
+<li>Why: Obtaining the <strong>entire</strong> dataset is too expensive or impossible<ul>
+<li>Processing the data is too expensive or time consuming</li>
+</ul>
+</li>
+</ul>
+<h2 id="Key-Principle-of-Sampling-Representative"><a href="#Key-Principle-of-Sampling-Representative" class="headerlink" title="Key Principle of Sampling: Representative"></a>Key Principle of Sampling: Representative</h2><ul>
+<li>using a sample should work as well as the entire dataset</li>
+<li>representative if it has approximately the <strong>same distribution of properties</strong> as the original set of data</li>
+</ul>
+<h2 id="Types-of-Sampling"><a href="#Types-of-Sampling" class="headerlink" title="Types of Sampling"></a>Types of Sampling</h2><ul>
+<li>Simple random sampling</li>
+<li>Sampling without replacement</li>
+<li><p>Sampling with replacement</p>
+</li>
+<li><p>Stratified sampling</p>
+</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sample(x, size, replace=<span class="literal">FALSE</span>, prob=<span class="literal">NULL</span>)</span><br><span class="line"><span class="comment">#sample 5 observations from grade</span></span><br><span class="line">set.seed(<span class="number">1</span>)</span><br><span class="line">sampled_rows = sample(<span class="number">1</span>:nrow(grade),<span class="number">5</span>)</span><br><span class="line">sampled_grade = grade[sampled_rows,]</span><br><span class="line"></span><br><span class="line"><span class="comment">#or equally using:</span></span><br><span class="line">set.seed(<span class="number">1</span>)</span><br><span class="line">sampled_grade = grade[saple(<span class="number">1</span>:nrow(grade), <span class="number">5</span>),]</span><br></pre></td></tr></table></figure>
+<h1 id="Data-Cleaning"><a href="#Data-Cleaning" class="headerlink" title="Data Cleaning"></a>Data Cleaning</h1><h2 id="Steps-of-Data-Cleaning"><a href="#Steps-of-Data-Cleaning" class="headerlink" title="Steps of Data Cleaning"></a>Steps of Data Cleaning</h2><ul>
+<li>real-world data tends to be incomplete, noisy, and inconsistent<ul>
+<li>Handle missing values</li>
+<li>Quality-check</li>
+<li>Deduplicate</li>
+</ul>
+</li>
+</ul>
+<h2 id="Missing-values"><a href="#Missing-values" class="headerlink" title="Missing values"></a>Missing values</h2><ul>
+<li>Types:<ul>
+<li>Missing completely at random</li>
+<li>missing at random</li>
+<li>missing not at random</li>
+</ul>
+</li>
+</ul>
+<h2 id="Handling-Missing-Values"><a href="#Handling-Missing-Values" class="headerlink" title="Handling Missing Values"></a>Handling Missing Values</h2><ul>
+<li>Delete the observation</li>
+<li>Fill in missing values with:<ul>
+<li>the attribute mean, max, min, 0 or specified value</li>
+<li>the attribute mean for all samples belonging to the same class (smarter)</li>
+<li>the most probable value: inference-based such as Bayesian formula or decision tree</li>
+</ul>
+</li>
+</ul>
+<h1 id="Data-Normalization"><a href="#Data-Normalization" class="headerlink" title="Data Normalization"></a>Data Normalization</h1><h2 id="Decimal-Scaling"><a href="#Decimal-Scaling" class="headerlink" title="Decimal Scaling"></a>Decimal Scaling</h2><ul>
+<li>$v’ = \frac{v}{10^j}$<ul>
+<li>where j is the smallest integer such that max(|v’|)&lt;1</li>
+</ul>
+</li>
+</ul>
+<h2 id="Min-Max-Normalization"><a href="#Min-Max-Normalization" class="headerlink" title="Min-Max Normalization"></a>Min-Max Normalization</h2><ul>
+<li>linear transformation among the original data</li>
+<li>$v’ = \frac{v-min_A}{max_A-min_A}(newMax_A-newMin_A)+new_min_A$</li>
+</ul>
+<h2 id="Z-Score-Normalization"><a href="#Z-Score-Normalization" class="headerlink" title="Z-Score Normalization"></a>Z-Score Normalization</h2><ul>
+<li>正态化</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=c(<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>)</span><br><span class="line">scale(x, center=<span class="literal">T</span>, scale=<span class="literal">F</span>) <span class="comment">#不收拢</span></span><br><span class="line">scale(x) <span class="comment">#标准化</span></span><br></pre></td></tr></table></figure>
+<h1 id="Data-Discretization"><a href="#Data-Discretization" class="headerlink" title="Data Discretization"></a>Data Discretization</h1><ul>
+<li>Divide the range of a continuous attribute into intervals</li>
+<li>Reasons<ul>
+<li>algorithms only accept categorical attributes</li>
+<li>reduce data size by discretization</li>
+</ul>
+</li>
+</ul>
+<h2 id="Equal-width-Discretization"><a href="#Equal-width-Discretization" class="headerlink" title="Equal-width Discretization"></a>Equal-width Discretization</h2><ul>
+<li>L = $\frac{max-min}{N}$</li>
+<li>Characteristics:<ul>
+<li>The most straightforward method, but not handle well on <strong>skewed</strong> data.</li>
+<li>Sensitive to N and <strong>outliers</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Equal-depth-Discretization"><a href="#Equal-depth-Discretization" class="headerlink" title="Equal-depth Discretization"></a>Equal-depth Discretization</h2><ul>
+<li>Divides the range into N intervals, each containing approximately the same number of samples.</li>
+<li>Characteristics<ul>
+<li>Good data scaling</li>
+<li>Not so sensitive to outliers</li>
+</ul>
+</li>
+</ul>
+<h2 id="Cluster-Analysis"><a href="#Cluster-Analysis" class="headerlink" title="Cluster Analysis"></a>Cluster Analysis</h2><ul>
+<li>Discretize a numeric attribute by <strong>partitioning</strong> the values of the attribute into clusters or groups.</li>
+<li>Characteristics<br>- </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Data-Cleaning/" rel="tag"># Data Cleaning</a>
+          
+            <a href="/tags/Data-Mining/" rel="tag"># Data Mining</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Business/Finance/Corporate-Finance/COFI-第一章-公司理财介绍/" rel="next" title="[ COFI ] 第一章 - 公司理财介绍">
+                <i class="fa fa-chevron-left"></i> [ COFI ] 第一章 - 公司理财介绍
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Business/Finance/Corporate-Finance/COFI-第二章-财务报表分析/" rel="prev" title="[ COFI ] 第二章 - 财务报表分析">
+                [ COFI ] 第二章 - 财务报表分析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Gary Dai</p>
+              <p class="site-description motion-element" itemprop="description">Notes about Business Analytics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DosakaLing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:gary_daiyu@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Data"><span class="nav-number">1.</span> <span class="nav-text">Data</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-attrubutes"><span class="nav-number">1.1.</span> <span class="nav-text">Types of attrubutes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Properties-of-Attributes"><span class="nav-number">1.2.</span> <span class="nav-text">Properties of Attributes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Selection"><span class="nav-number">2.</span> <span class="nav-text">Data Selection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sampling"><span class="nav-number">2.1.</span> <span class="nav-text">Sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-Principle-of-Sampling-Representative"><span class="nav-number">2.2.</span> <span class="nav-text">Key Principle of Sampling: Representative</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-Sampling"><span class="nav-number">2.3.</span> <span class="nav-text">Types of Sampling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Cleaning"><span class="nav-number">3.</span> <span class="nav-text">Data Cleaning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps-of-Data-Cleaning"><span class="nav-number">3.1.</span> <span class="nav-text">Steps of Data Cleaning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Missing-values"><span class="nav-number">3.2.</span> <span class="nav-text">Missing values</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handling-Missing-Values"><span class="nav-number">3.3.</span> <span class="nav-text">Handling Missing Values</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Normalization"><span class="nav-number">4.</span> <span class="nav-text">Data Normalization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Decimal-Scaling"><span class="nav-number">4.1.</span> <span class="nav-text">Decimal Scaling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Min-Max-Normalization"><span class="nav-number">4.2.</span> <span class="nav-text">Min-Max Normalization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Z-Score-Normalization"><span class="nav-number">4.3.</span> <span class="nav-text">Z-Score Normalization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Discretization"><span class="nav-number">5.</span> <span class="nav-text">Data Discretization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Equal-width-Discretization"><span class="nav-number">5.1.</span> <span class="nav-text">Equal-width Discretization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Equal-depth-Discretization"><span class="nav-number">5.2.</span> <span class="nav-text">Equal-depth Discretization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-Analysis"><span class="nav-number">5.3.</span> <span class="nav-text">Cluster Analysis</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Dai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

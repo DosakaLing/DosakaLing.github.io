@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Classification,R,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="It’s time to apply Classification Model into practice! The notes would cover: Data Description, Logistic Regression, LDA, QDA, KNN  and an Example">
+<meta name="keywords" content="Classification,R">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[ ISLR ] Chapter 04 - Use R to Do Classification">
+<meta property="og:url" content="http://yoursite.com/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/index.html">
+<meta property="og:site_name" content="TusakaRin">
+<meta property="og:description" content="It’s time to apply Classification Model into practice! The notes would cover: Data Description, Logistic Regression, LDA, QDA, KNN  and an Example">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://yoursite.com/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/smarket.png">
+<meta property="og:image" content="http://yoursite.com/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/caravan.png">
+<meta property="og:updated_time" content="2019-07-13T11:59:48.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[ ISLR ] Chapter 04 - Use R to Do Classification">
+<meta name="twitter:description" content="It’s time to apply Classification Model into practice! The notes would cover: Data Description, Logistic Regression, LDA, QDA, KNN  and an Example">
+<meta name="twitter:image" content="http://yoursite.com/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/smarket.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/">
+
+
+
+
+
+  <title>[ ISLR ] Chapter 04 - Use R to Do Classification | TusakaRin</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">TusakaRin</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is fantastic</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gary Dai">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="TusakaRin">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[ ISLR ] Chapter 04 - Use R to Do Classification</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-12T21:50:01+08:00">
+                2019-02-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/" itemprop="url" rel="index">
+                    <span itemprop="name">Programing</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/R/" itemprop="url" rel="index">
+                    <span itemprop="name">R</span>
+                  </a>
+                </span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programing/R/ISLR/" itemprop="url" rel="index">
+                    <span itemprop="name">ISLR</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ul>
+<li>It’s time to apply <a href="https://dosakaling.github.io/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/" target="_blank" rel="noopener">Classification Model</a> into practice!</li>
+<li>The notes would cover: <strong>Data Description, Logistic Regression, LDA, QDA, KNN </strong> and an <strong>Example</strong></li>
+</ul>
+<a id="more"></a>
+<h1 id="Stock-Market-Data"><a href="#Stock-Market-Data" class="headerlink" title="Stock Market Data"></a>Stock Market Data</h1><ul>
+<li>percentage returns for the S&amp;P 500 stock index over 1250 days, from 2011 to end of 2005.</li>
+<li>Load the data</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(ISLR)</span><br><span class="line">names(Smarket)</span><br><span class="line">dim(Smarket)</span><br><span class="line">summary(Smarket)</span><br><span class="line">pairs(Smarket) <span class="comment">#散点矩阵图</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>A glance at the dataset:</li>
+</ul>
+<img src="/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/smarket.png">
+<ul>
+<li>Use <code>cor(matrix)</code> to view the correlations between predictors, if some predictors are <strong>qualitative</strong>, they should be removed</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cor(Smarket[,-<span class="number">9</span>])</span><br><span class="line"><span class="keyword">attach</span>(Smarket)</span><br><span class="line">plot(Volume)</span><br></pre></td></tr></table></figure>
+<h1 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h1><h2 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h2><ul>
+<li>Use <code>glm(model formula)</code> to fit a <strong>generalized linear model</strong> including logistic regression, indicated by pass <strong>family=binomial</strong></li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm.fit = glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,data=Smarket,family=binomial)</span><br><span class="line">summary(glm.fit)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Refit the model using subset of data:</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm.fit = glm(Direction~Lag1+Lag2+Lag3+Lag4+Lag5+Volume,data=Smarket,family=binomial,subset=train)</span><br><span class="line">glm.probs = predict(glm.fit,Smarket.2005,type=<span class="string">"response"</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Refit the model using less predictors:</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm.fit = glm(Direction~Lag1+Lag2, data=Smarket,family=binomial,subset=train)</span><br><span class="line">glm.probs = predict(glm.fit,Smarket.2005,type=<span class="string">"response"</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Predict"><a href="#Predict" class="headerlink" title="Predict"></a>Predict</h2><ul>
+<li><code>predict(glm.fit)</code> predict the logit($\beta_0+\beta_1X​$)</li>
+<li><code>predict(glm.fit,type=response)</code> predict the probability of <strong>up</strong></li>
+<li>The value is the probability of <strong>up</strong> because of what  <code>contrasts(Direction)</code> show</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt; contrasts(Direction)</span><br><span class="line">		Up</span><br><span class="line">Down 	0</span><br><span class="line">Up		1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Convert the predict value to <strong>label</strong></li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glm.pred = rep(<span class="string">"Down"</span>,<span class="number">1250</span>)</span><br><span class="line">glm.pred[glm.probs&gt;<span class="number">0.5</span>] = <span class="string">"Up"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>To predict a <strong>particular day</strong></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">predict(glm.fit,newdata=data.frame(Lag1=c(1.2,1.5),Lag2=c(1.1,-0.8)),type=&quot;response&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="Assessment"><a href="#Assessment" class="headerlink" title="Assessment"></a>Assessment</h2><h3 id="Confusion-Matrix"><a href="#Confusion-Matrix" class="headerlink" title="Confusion Matrix"></a>Confusion Matrix</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table(glm.pred,Direction)</span><br></pre></td></tr></table></figure>
+<h3 id="Correction-Rate"><a href="#Correction-Rate" class="headerlink" title="Correction Rate"></a>Correction Rate</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mean(glm.pred==Direction)</span><br></pre></td></tr></table></figure>
+<h3 id="Separate-the-training-data"><a href="#Separate-the-training-data" class="headerlink" title="Separate the training data"></a>Separate the training data</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train = (Year&lt;<span class="number">2005</span>)</span><br><span class="line">Smarket.2005 = Smarket[!train,]</span><br><span class="line">dim(Smarket.2005)</span><br><span class="line">Direction.2005 = Direction[!train]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The same code in Python would be:<ul>
+<li><code>Smarket[&#39;2005&#39;] = Smarket[Smarket.Year&gt;2005]</code></li>
+<li><code>Direction[&#39;2005&#39;] = Smarket[Smarket.Year&gt;2005].Direction</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Refit"><a href="#Refit" class="headerlink" title="Refit"></a>Refit</h3><ul>
+<li>See the above</li>
+</ul>
+<h3 id="Re-assess-subset-data"><a href="#Re-assess-subset-data" class="headerlink" title="Re-assess(subset data)"></a>Re-assess(subset data)</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">glm.pred = rep(<span class="string">"Down"</span>,<span class="number">252</span>)</span><br><span class="line">glm.pred[glm.probs&gt;<span class="number">0.5</span>] = <span class="string">"Up"</span></span><br><span class="line">table(glm.pred,Direction.2005)</span><br><span class="line">mean(glm.pred==Direction.2005)</span><br></pre></td></tr></table></figure>
+<h3 id="Re-assess-less-predictor"><a href="#Re-assess-less-predictor" class="headerlink" title="Re-assess(less predictor)"></a>Re-assess(less predictor)</h3><figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">glm.pred = rep(<span class="string">"Down"</span>,<span class="number">252</span>)</span><br><span class="line">glm.pred[glm.probs&gt;<span class="number">0.5</span>] = <span class="string">"Up"</span></span><br><span class="line">table(glm.pred,Direction.2005)</span><br></pre></td></tr></table></figure>
+<h1 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h1><h2 id="Fit-Model"><a href="#Fit-Model" class="headerlink" title="Fit Model"></a>Fit Model</h2><ul>
+<li>Use <code>lad(formula)</code> to fit a LDA model, which is part of <code>MASS</code> package</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lda.fit = lda(Direction~Lag1+Lag2,data=Smarket,subset=train)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>result:</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Call:</span><br><span class="line">lda(Direction ~ Lag1 + Lag2, data = Smarket, subset = train)</span><br><span class="line"></span><br><span class="line">Prior probabilities of groups:</span><br><span class="line">    Down       Up </span><br><span class="line"><span class="number">0.491984</span> <span class="number">0.508016</span> </span><br><span class="line"></span><br><span class="line">Group means:</span><br><span class="line">            Lag1        Lag2</span><br><span class="line">Down  <span class="number">0.04279022</span>  <span class="number">0.03389409</span></span><br><span class="line">Up   -<span class="number">0.03954635</span> -<span class="number">0.03132544</span></span><br><span class="line"></span><br><span class="line">Coefficients of linear discriminants:</span><br><span class="line">            LD1</span><br><span class="line">Lag1 -<span class="number">0.6420190</span></span><br><span class="line">Lag2 -<span class="number">0.5135293</span></span><br></pre></td></tr></table></figure>
+<h2 id="Assessment-1"><a href="#Assessment-1" class="headerlink" title="Assessment"></a>Assessment</h2><ul>
+<li><code>plot(lda.fit)</code> produces plot of the <em>linear discriminants</em></li>
+<li><code>lda.pred=predict(lda.fit,Smarket.2005)</code></li>
+<li><code>names(lda.pred)</code><ul>
+<li><strong>class</strong> contains LDA’s predictions about the movement of the market</li>
+<li><strong>posterior</strong> a matrix whose kth column contains the posterior probability belong to the kth class</li>
+<li><strong>x</strong> contains the linear discriminants</li>
+</ul>
+</li>
+<li><code>lda.class = lda.pred$class</code></li>
+<li><code>table(lda.class,Direction.2005)</code></li>
+<li><code>mean(lda.class==Direction.2005)</code></li>
+</ul>
+<h2 id="Change-the-Threshold"><a href="#Change-the-Threshold" class="headerlink" title="Change the Threshold"></a>Change the Threshold</h2><ul>
+<li><code>sum(lda.pred$posterior[,1]&gt;=0.5)</code></li>
+<li><p><code>sum(lda.pred$posterior[,1]&gt;0.9)</code></p>
+</li>
+<li><p><strong>* remember to test whether class is correspond to the larger probability</strong></p>
+<ul>
+<li><code>lda.pred$posterior[1:20,1]</code></li>
+<li><code>lda.class[1:20]</code></li>
+</ul>
+</li>
+</ul>
+<h1 id="KNN"><a href="#KNN" class="headerlink" title="KNN"></a>KNN</h1><h2 id="Data-Cleaning"><a href="#Data-Cleaning" class="headerlink" title="Data Cleaning"></a>Data Cleaning</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">train.X = cbind(Lag1,Lag2)[train,]</span><br><span class="line">test.X = cbind(Lag1,Lag2)[!train,]</span><br><span class="line">train.Direction = Direction[train]</span><br><span class="line">train = Year &lt; 2005</span><br><span class="line">Direction.2005 = Direction[!train]</span><br></pre></td></tr></table></figure>
+<h2 id="The-knn-Method"><a href="#The-knn-Method" class="headerlink" title="The knn() Method"></a>The <code>knn()</code> Method</h2><ul>
+<li>A part of <code>class</code> package</li>
+<li><code>knn()</code> require four inputs:<ul>
+<li>matrix containing the predictors associated with the training data</li>
+<li>matrix containing the test dataset</li>
+<li>vector containing the class labels for training observations</li>
+<li>value for K, the level of flexibility</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">library</span>(class)</span><br><span class="line">set.seed(<span class="number">1</span>) <span class="comment">#To get stable result if the nearest neighbour is random selected</span></span><br><span class="line">knn.pred = knn(train.X,test.X,train.Direction,k=<span class="number">1</span>)</span><br><span class="line">table(knn.pred,Direction.2005)</span><br><span class="line">knn.pred = knn(train.X,test.X,train.Direction,k=<span class="number">3</span>)</span><br><span class="line">table(knn.pred,Direction.2005)</span><br></pre></td></tr></table></figure>
+<h1 id="Application-to-Caravan-Insurance-Data"><a href="#Application-to-Caravan-Insurance-Data" class="headerlink" title="Application to Caravan Insurance Data"></a>Application to Caravan Insurance Data</h1><h2 id="Data-set"><a href="#Data-set" class="headerlink" title="Data set"></a>Data set</h2><ul>
+<li><strong>Caravan</strong> data set, a part of ISLR library</li>
+<li>Includes 85 predictors that measure demographic characteristics for 5822 individuals, of which 348 purchase the insurance.</li>
+</ul>
+<img src="/Programing/R/ISLR/ISLR-Chapter-04-Use-R-to-Do-Classification/caravan.png">
+<ul>
+<li><strong>Important:</strong> The scale of the predictor matter a lot to KNN, so we should <strong>standardize</strong> the dataset before we apply the method. <strong>也就是说，如果某个维度上scale比较大，那么这个点就会相当远</strong></li>
+</ul>
+<h2 id="Data-Cleaning-1"><a href="#Data-Cleaning-1" class="headerlink" title="Data Cleaning"></a>Data Cleaning</h2><ul>
+<li>Standardization</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">standardized.X = scale(Caravan(,-<span class="number">86</span>))</span><br><span class="line"><span class="comment">#Use var(Caravan[,1]) and var(Caravan[,2])</span></span><br><span class="line"><span class="comment">#and var(standardized.X[,1]) and var(standardized.X[,2])</span></span><br><span class="line"><span class="comment">#To see the effect of scale function</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Split the dataset</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">test = <span class="number">1</span>:<span class="number">1000</span></span><br><span class="line">train.X=standardized.X[-test,]</span><br><span class="line">test.X = standardized.X[test,]</span><br><span class="line">train.Y = Purchase[-test]</span><br><span class="line">test.Y=Purchase[test]</span><br></pre></td></tr></table></figure>
+<h2 id="Model-Fitting"><a href="#Model-Fitting" class="headerlink" title="Model Fitting"></a>Model Fitting</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set.seed(1)</span><br><span class="line">knn.pred = knn(train.X,test.X,train.Y,k=1)</span><br><span class="line">mean(test.Y!=knn.pred)</span><br><span class="line">mean(test.Y!=&quot;No&quot;)</span><br></pre></td></tr></table></figure>
+<h2 id="Discussion"><a href="#Discussion" class="headerlink" title="Discussion"></a>Discussion</h2><ul>
+<li><p>The error rate is 12. However, if we just predict every customer would not purchase, the error rate is 6%.</p>
+</li>
+<li><p>But, if the company wants to sell insurance to those who want to but it, it’s worth noting that:</p>
+<ul>
+<li>The rate of TP/P* is 0.117, which means among 77 who were predicted to be true, 9 are right-predicted.</li>
+<li><p>However, the random guess is 6%</p>
+</li>
+<li><p>Change the K to 5 yields:</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">knn.pred = knn(train.X,test.X,train.Y,k=<span class="number">5</span>)</span><br><span class="line">table(knn.pred,test.Y)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>When we apply logistic regression:</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">glm.fit = glm(Purchase~.,data = Caravan,family=binomial,subset=-test)</span><br><span class="line">glm.probs = predict(glm.fit,Caravan[test,],type=<span class="string">"response"</span>)</span><br><span class="line">glm.pred=rep(<span class="string">"No"</span>,<span class="number">1000</span>)</span><br><span class="line">glm.pred[glm.probs&gt;<span class="number">0.5</span>] = <span class="string">"Yes"</span></span><br><span class="line">table(glm.pred,test.Y)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Use 0.25 as the threshold</span></span><br><span class="line">glm.pred=rep(<span class="string">"No"</span>,<span class="number">1000</span>)</span><br><span class="line">glm.pred[glm.probs&gt;<span class="number">0.25</span>] = <span class="string">"Yes"</span></span><br><span class="line">table(glm.pred,test.Y)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Classification/" rel="tag"># Classification</a>
+          
+            <a href="/tags/R/" rel="tag"># R</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Hexo/Setting/HEXO-Enable-Comments-Powered-by-Valine/" rel="next" title="[ HEXO ] Enable Comments Powered by Valine">
+                <i class="fa fa-chevron-left"></i> [ HEXO ] Enable Comments Powered by Valine
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Data-Analysis/Statistical-Learning/ISLR-Chapter-05-Resampling/" rel="prev" title="[ ISLR ] Chapter 05 - Resampling">
+                [ ISLR ] Chapter 05 - Resampling <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Gary Dai</p>
+              <p class="site-description motion-element" itemprop="description">Notes about Business Analytics</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/DosakaLing" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:gary_daiyu@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Stock-Market-Data"><span class="nav-number">1.</span> <span class="nav-text">Stock Market Data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Logistic-Regression"><span class="nav-number">2.</span> <span class="nav-text">Logistic Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Model"><span class="nav-number">2.1.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Predict"><span class="nav-number">2.2.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assessment"><span class="nav-number">2.3.</span> <span class="nav-text">Assessment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Confusion-Matrix"><span class="nav-number">2.3.1.</span> <span class="nav-text">Confusion Matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Correction-Rate"><span class="nav-number">2.3.2.</span> <span class="nav-text">Correction Rate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Separate-the-training-data"><span class="nav-number">2.3.3.</span> <span class="nav-text">Separate the training data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Refit"><span class="nav-number">2.3.4.</span> <span class="nav-text">Refit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Re-assess-subset-data"><span class="nav-number">2.3.5.</span> <span class="nav-text">Re-assess(subset data)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Re-assess-less-predictor"><span class="nav-number">2.3.6.</span> <span class="nav-text">Re-assess(less predictor)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LDA"><span class="nav-number">3.</span> <span class="nav-text">LDA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fit-Model"><span class="nav-number">3.1.</span> <span class="nav-text">Fit Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assessment-1"><span class="nav-number">3.2.</span> <span class="nav-text">Assessment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Change-the-Threshold"><span class="nav-number">3.3.</span> <span class="nav-text">Change the Threshold</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#KNN"><span class="nav-number">4.</span> <span class="nav-text">KNN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Cleaning"><span class="nav-number">4.1.</span> <span class="nav-text">Data Cleaning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-knn-Method"><span class="nav-number">4.2.</span> <span class="nav-text">The knn() Method</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-to-Caravan-Insurance-Data"><span class="nav-number">5.</span> <span class="nav-text">Application to Caravan Insurance Data</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-set"><span class="nav-number">5.1.</span> <span class="nav-text">Data set</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Cleaning-1"><span class="nav-number">5.2.</span> <span class="nav-text">Data Cleaning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Model-Fitting"><span class="nav-number">5.3.</span> <span class="nav-text">Model Fitting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Discussion"><span class="nav-number">5.4.</span> <span class="nav-text">Discussion</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gary Dai</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
