@@ -202,12 +202,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            Tags
+            About
           </a>
         </li>
       
@@ -418,11 +418,11 @@
 </table>
 </div>
 <ul>
-<li><p>The estimate of the test error rate is: $CV<em>{(n)} = \frac{1}{n}\sum^n</em>{i=1}MSE_i$ of which, $MSE_i = (y_i-\hat{y}_i)^2$</p>
+<li><p>The estimate of the test error rate is: $CV_{(n)} = \frac{1}{n}\sum^n_{i=1}MSE_i$ of which, $MSE_i = (y_i-\hat{y}_i)^2$</p>
 </li>
 <li><p>An simplify of the LOOCV if the model is polynomial or least square linear:</p>
 <ul>
-<li>$CV<em>{(n)} = \frac{1}{n}\sum^n</em>{i=1}(\frac{y_i-\hat{y}_i}{1-h_i})^2$</li>
+<li>$CV_{(n)} = \frac{1}{n}\sum^n_{i=1}(\frac{y_i-\hat{y}_i}{1-h_i})^2$</li>
 <li>Where hi will be described later in the chapter about linear regression</li>
 </ul>
 </li>
@@ -469,7 +469,7 @@
 <h1 id="The-Bootstrap"><a href="#The-Bootstrap" class="headerlink" title="The Bootstrap"></a>The Bootstrap</h1><h2 id="An-example"><a href="#An-example" class="headerlink" title="An example:"></a>An example:</h2><ul>
 <li><p>Suppose we want to minimize the variance of an investment: $Var(\alpha X+(1-\alpha)Y)$</p>
 </li>
-<li><p>Thus $\alpha = \frac{\sigma^2<em>Y-\sigma</em>{XY}}{\sigma^2<em>X+\sigma^2_Y-2\sigma</em>{XY}}$ can minimize the above value</p>
+<li><p>Thus $\alpha = \frac{\sigma^2_Y-\sigma_{XY}}{\sigma^2_X+\sigma^2_Y-2\sigma_{XY}}$ can minimize the above value</p>
 </li>
 <li>Use 1000 times of simulation to estimate $\alpha$, and $\hat{\alpha}_r$ is very close to true $ \alpha$</li>
 <li>The standard deviation is $SE(\widehat{\alpha}) = \sqrt{\frac{1}{1000}\sum^{1000}_{r=1}(\hat{\alpha}_r-\bar{\alpha})^2}$</li>
@@ -770,6 +770,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -804,6 +807,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -888,6 +901,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

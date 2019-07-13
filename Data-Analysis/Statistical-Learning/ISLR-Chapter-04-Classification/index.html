@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Classification,R,Linear Discriminant Analysis,">
+  <meta name="keywords" content="Classification,Linear Discriminant Analysis,R,">
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="Last Chapter introduce linear regression as a basic tool for regression analysis. For this chapter, LDA and logit model would be introduced to solve classification problems This notes covers: Why not">
-<meta name="keywords" content="Classification,R,Linear Discriminant Analysis">
+<meta name="keywords" content="Classification,Linear Discriminant Analysis,R">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[ ISLR ] Chapter 04 - Classification">
 <meta property="og:url" content="http://yoursite.com/Data-Analysis/Statistical-Learning/ISLR-Chapter-04-Classification/index.html">
@@ -193,12 +193,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            Tags
+            About
           </a>
         </li>
       
@@ -377,7 +377,7 @@
 <li>Use maximum likelihood.</li>
 <li><p>The intuition: find the best $\beta_0$ and $\beta_1$ to make the observations in the sample are most likely to be chosen from the population.</p>
 </li>
-<li><p>The <strong>likelihood function</strong>: $l(\beta<em>0,\beta_1) = \prod</em>{i:y<em>i =1}p(x_i)\prod</em>{i’:y<em>{i’}=0}(1-p(x</em>{i’}))$</p>
+<li><p>The <strong>likelihood function</strong>: $l(\beta_0,\beta_1) = \prod_{i:y_i =1}p(x_i)\prod_{i’:y_{i’}=0}(1-p(x_{i’}))$</p>
 </li>
 <li>p-value and hypothesis test can be carried as linear regression, but <strong>$R^2$</strong> may become meaningless</li>
 </ul>
@@ -389,7 +389,7 @@
 <li>The remaining $Pr(Y=Class_3) = 1-Pr(Y=Class_1|X)-Pr(Y = Class_2 | X)$</li>
 </ul>
 <h1 id="Linear-Discriminant-Analysis"><a href="#Linear-Discriminant-Analysis" class="headerlink" title="Linear Discriminant Analysis"></a>Linear Discriminant Analysis</h1><ul>
-<li>Bayes’ theorem: $Pr(Y=k|X=x) = \frac{\pi<em>kf_k(x)}{\sum</em>{l=1}^{K}\pi_lf_l(x)}$</li>
+<li>Bayes’ theorem: $Pr(Y=k|X=x) = \frac{\pi_kf_k(x)}{\sum_{l=1}^{K}\pi_lf_l(x)}$</li>
 <li><p>refer to $p_k(x)$ ,which is the left-hand of the equation as the <strong>posterior</strong>.</p>
 <ul>
 <li>refer to $\pi_k$ as <strong>prior</strong></li>
@@ -406,11 +406,11 @@
 </ul>
 <h2 id="LDA-For-p-1-one-predictor"><a href="#LDA-For-p-1-one-predictor" class="headerlink" title="LDA For p = 1 (one predictor)"></a>LDA For p = 1 (one predictor)</h2><h3 id="Estimate-the-density"><a href="#Estimate-the-density" class="headerlink" title="Estimate the density"></a>Estimate the density</h3><ul>
 <li>$f_k(x) = \frac{1}{\sqrt{2\pi}\sigma_k}e^{-\frac{(x-\mu_k)^2}{2\sigma_k^2}}$</li>
-<li>Then taking the log of the equation: $Pr(Y=k|X=x) = \frac{\pi<em>kf_k(x)}{\sum</em>{l=1}^{K}\pi_lf_l(x)}$, we can show that it is equivalent to assigning the observation to the class for which $\delta_k(x) = x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}+log(\pi_k)$ is <strong>largest</strong></li>
+<li>Then taking the log of the equation: $Pr(Y=k|X=x) = \frac{\pi_kf_k(x)}{\sum_{l=1}^{K}\pi_lf_l(x)}$, we can show that it is equivalent to assigning the observation to the class for which $\delta_k(x) = x\cdot\frac{\mu_k}{\sigma^2} - \frac{\mu_k^2}{2\sigma^2}+log(\pi_k)$ is <strong>largest</strong></li>
 </ul>
 <h3 id="Estimate-mu-k-and-sigma-k"><a href="#Estimate-mu-k-and-sigma-k" class="headerlink" title="Estimate $\mu_k$ and $\sigma_k$"></a>Estimate $\mu_k$ and $\sigma_k$</h3><ul>
-<li>For each class: $\hat{\mu}<em>k = \frac{1}{n}\sum</em>{i:y_i=k}x_i​$</li>
-<li>Then we assume that the variance of predictor is all the same for each class. $\hat{\sigma}^2 = \frac{1}{n-K}\sum^K<em>{k=1}\sum^{}</em>{y_i=k}(x_i-\hat{\mu}_k)^2$</li>
+<li>For each class: $\hat{\mu}_k = \frac{1}{n}\sum_{i:y_i=k}x_i​$</li>
+<li>Then we assume that the variance of predictor is all the same for each class. $\hat{\sigma}^2 = \frac{1}{n-K}\sum^K_{k=1}\sum^{}_{y_i=k}(x_i-\hat{\mu}_k)^2$</li>
 </ul>
 <h2 id="LDA-For-p-gt-1"><a href="#LDA-For-p-gt-1" class="headerlink" title="LDA For p &gt; 1"></a>LDA For p &gt; 1</h2><h3 id="Assumption"><a href="#Assumption" class="headerlink" title="Assumption:"></a>Assumption:</h3><ul>
 <li><p>Within each class, the observations are drawn from a <strong>same</strong> <strong>multi-variate normal distribution</strong></p>
@@ -576,9 +576,9 @@
           
             <a href="/tags/Classification/" rel="tag"># Classification</a>
           
-            <a href="/tags/R/" rel="tag"># R</a>
-          
             <a href="/tags/Linear-Discriminant-Analysis/" rel="tag"># Linear Discriminant Analysis</a>
+          
+            <a href="/tags/R/" rel="tag"># R</a>
           
         </div>
       
@@ -840,6 +840,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -874,6 +877,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -958,6 +971,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 

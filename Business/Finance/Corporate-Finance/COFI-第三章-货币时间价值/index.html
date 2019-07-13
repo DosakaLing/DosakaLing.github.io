@@ -196,12 +196,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            Tags
+            About
           </a>
         </li>
       
@@ -422,7 +422,7 @@
 </li>
 </ul>
 <h1 id="系列现金流的估值"><a href="#系列现金流的估值" class="headerlink" title="系列现金流的估值"></a>系列现金流的估值</h1><ul>
-<li>$PV=\sum^N<em>{n=0}PV(C_n) = \sum^{N}</em>{n=0}\frac{C_n}{(1+r)^n}$</li>
+<li>$PV=\sum^N_{n=0}PV(C_n) = \sum^{N}_{n=0}\frac{C_n}{(1+r)^n}$</li>
 <li>愿意借出的钱等于还款额的现值</li>
 </ul>
 <h1 id="系列现金流的净现值"><a href="#系列现金流的净现值" class="headerlink" title="系列现金流的净现值"></a>系列现金流的净现值</h1><ul>
@@ -719,6 +719,9 @@
 
 
 
+  
+  
+
 
 
 
@@ -753,6 +756,16 @@
   
   
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/canvas_lines.min.js"></script>
   
 
 
@@ -837,6 +850,28 @@
   
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
